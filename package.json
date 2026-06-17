@@ -1,0 +1,8 @@
+{
+    "name": "fail-on-console",
+    "version": "1.0.0",
+    "description": "Prevent console noise from obscuring test results.",
+    "license": "MIT",
+    "main": "index.js",
+    "packageManager": "pnpm@11.7.0"
+}
