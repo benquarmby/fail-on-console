@@ -7,9 +7,11 @@
     "scripts": {
         "format": "prettier --write .",
         "format:check": "prettier --check .",
-        "test": "vitest run"
+        "test": "vitest run",
+        "test:compat": "jest"
     },
     "devDependencies": {
+        "jest": "^30.4.2",
         "prettier": "^3.8.4",
         "prettier-plugin-packagejson": "^3.0.2",
         "vitest": "^4.1.9"
