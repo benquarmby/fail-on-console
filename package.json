@@ -3,7 +3,11 @@
     "version": "1.0.0",
     "description": "Prevent console noise from obscuring test results.",
     "license": "MIT",
-    "main": "index.js",
+    "main": "./index.js",
+    "files": [
+        "./CHANGELOG.md",
+        "./index.d.ts"
+    ],
     "scripts": {
         "format": "prettier --write .",
         "format:check": "prettier --check .",
