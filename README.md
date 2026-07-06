@@ -27,24 +27,24 @@ yarn add --dev fail-on-console
 
 ## Setup
 
-`setup` should be called once in a global setup file, accepting the lifecycle hooks and `expect` utility from the testing framework.
+`setupConsole` should be called once in a global setup file, accepting the lifecycle hooks and `expect` utility from the testing framework.
 
 ### With Vitest
 
 ```ts
 import {beforeEach, afterEach, expect} from "vitest";
-import {setup} from "fail-on-console";
+import {setupConsole} from "fail-on-console";
 
-setup({beforeEach, afterEach, expect});
+setupConsole({beforeEach, afterEach, expect});
 ```
 
 ### With Jest
 
 ```ts
 import {beforeEach, afterEach, expect} from "@jest/globals";
-import {setup} from "fail-on-console";
+import {setupConsole} from "fail-on-console";
 
-setup({beforeEach, afterEach, expect});
+setupConsole({beforeEach, afterEach, expect});
 ```
 
 ### Customizing Monitored Methods
@@ -52,7 +52,7 @@ setup({beforeEach, afterEach, expect});
 By default, `debug` is not monitored but `error`, `warn`, `info`, and `log` are. This can be customized by passing a `methods` array:
 
 ```ts
-setup({
+setupConsole({
     beforeEach,
     afterEach,
     expect,
@@ -85,7 +85,7 @@ allowConsole("error", ["known warning", /deprecated/, (msg) => msg.includes("thi
 
 ## API Reference
 
-### `setup(options)`
+### `setupConsole(options)`
 
 Initializes console spies that monitor active tests.
 

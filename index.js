@@ -46,9 +46,9 @@ function isAllowed(message, rule) {
     return rule.test(message);
 }
 
-function setup({beforeEach, afterEach, expect, methods = defaultMethods}) {
+function setupConsole({beforeEach, afterEach, expect, methods = defaultMethods}) {
     if (testApi) {
-        throw new Error("fail-on-console: Call setup() only once.");
+        throw new Error("fail-on-console: Call setupConsole() only once.");
     }
 
     testApi = {beforeEach, afterEach, expect};
@@ -95,7 +95,7 @@ function setup({beforeEach, afterEach, expect, methods = defaultMethods}) {
 
 function allowConsole(method, rules) {
     if (!testApi) {
-        throw new Error("fail-on-console: Call setup() before using allowConsole().");
+        throw new Error("fail-on-console: Call setupConsole() before using allowConsole().");
     }
 
     const normalized = Array.isArray(rules) ? rules : [rules];
@@ -113,5 +113,6 @@ function allowConsole(method, rules) {
     }
 }
 
-exports.setup = setup;
+exports.setup = setupConsole;
+exports.setupConsole = setupConsole;
 exports.allowConsole = allowConsole;

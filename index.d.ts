@@ -28,6 +28,8 @@ export interface AllowPredicate {
 
 export type AllowRule = string | RegExp | AllowPredicate;
 
+export function setup(options: SetupOptions): void;
+
 /**
  * Installs console spies that fail the current test if any monitored console
  * method is called. Call once at the top of the test setup file, passing the
@@ -37,7 +39,7 @@ export type AllowRule = string | RegExp | AllowPredicate;
  * @param {Function} options.beforeEach The beforeEach hook from the test framework.
  * @param {Function} options.afterEach The afterEach hook from the test framework.
  * @param {Object} options.expect The expect object from the test framework. Must expose getState().
- * @param {string[]} [options.methods=["error","warn","info","log"]] - Console methods to monitor.
+ * @param {string[]} [options.methods=["error","warn","info","log"]] Console methods to monitor.
  * @example
  * // Jest
  * import {beforeEach, afterEach, expect} from "@jest/globals";
@@ -51,7 +53,7 @@ export type AllowRule = string | RegExp | AllowPredicate;
  *
  * setup({beforeEach, afterEach, expect});
  */
-export function setup(options: SetupOptions): void;
+export function setupConsole(options: SetupOptions): void;
 
 /**
  * Allows specific console calls to pass. Console exceptions can be configured

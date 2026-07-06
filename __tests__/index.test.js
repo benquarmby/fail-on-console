@@ -1,10 +1,10 @@
-const {allowConsole, setup} = require("..");
+const {allowConsole, setupConsole, setup} = require("..");
 
 // Jest doesn't include `afterEach` failures within `it.failing`. Only vitest
 // can be used to cover true positive assertion failures.
 const itFails = globalThis.vitest ? it.fails : it.skip;
 
-setup({afterEach, beforeEach, expect});
+setupConsole({afterEach, beforeEach, expect});
 
 allowConsole("log", ["globally allowed message"]);
 
@@ -13,6 +13,10 @@ describe("fail-on-console", function () {
 
     it("should pass when console.warn is called with an allowed message", function () {
         console.warn("expected warning from a third-party library");
+    });
+
+    it("should disallow calling setup twice", function () {
+        expect(() => setupConsole({afterEach, beforeEach, expect})).toThrow(/Call setupConsole\(\) only once./);
     });
 
     describe("nested scopes", function () {
