@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/benquarmby/fail-on-console/compare/v1.0.1...v1.1.0) (2026-07-06)
+
+
+### Features
+
+* add setupConsole export ([073ba69](https://github.com/benquarmby/fail-on-console/commit/073ba69ce1b7e07d09880ef110aea55f34b7f995))
+
+
+### Bug Fixes
+
+* deprecate setup export ([21f732a](https://github.com/benquarmby/fail-on-console/commit/21f732a1b48420818d055f0dace57eab3e4eb69e))
+
 ## [1.0.1](https://github.com/benquarmby/fail-on-console/compare/v1.0.0...v1.0.1) (2026-07-06)
 
 
