@@ -12,6 +12,11 @@ on:
       - alpha
       - beta
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
@@ -36,3 +41,10 @@ jobs:
         run: pnpm test:cover
       - name: Test with Jest
         run: pnpm test:compat
+      - name: Release Please
+        if: github.event_name == 'push'
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          config-file: .github/release-please-config.${{github.ref_name}}.json
+          manifest-file: .github/release-please-manifest.json
+          target-branch: ${{github.ref_name}}
