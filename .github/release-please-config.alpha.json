@@ -1,0 +1,12 @@
+{
+    "always-update": true,
+    "include-component-in-tag": false,
+    "packages": {
+        ".": {}
+    },
+    "prerelease": true,
+    "prerelease-type": "alpha",
+    "pull-request-title-pattern": "chore: release${component} ${version}",
+    "release-type": "node",
+    "versioning": "prerelease"
+}
