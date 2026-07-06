@@ -28,6 +28,10 @@ export interface AllowPredicate {
 
 export type AllowRule = string | RegExp | AllowPredicate;
 
+/**
+ * @deprecated Use setupConsole() instead. This function will be removed in a
+ * future major version.
+ */
 export function setup(options: SetupOptions): void;
 
 /**
