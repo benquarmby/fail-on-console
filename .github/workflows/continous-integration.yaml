@@ -28,6 +28,8 @@ jobs:
           node-version-file: .nvmrc
       - name: Install Dependencies
         run: pnpm install
+      - name: Check Commits
+        run: pnpm commit:check
       - name: Check Format
         run: pnpm format:check
       - name: Test with Vitest
