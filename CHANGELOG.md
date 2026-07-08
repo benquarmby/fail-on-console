@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/benquarmby/fail-on-console/compare/v1.1.0...v1.1.1) (2026-07-08)
+
+
+### Bug Fixes
+
+* add missing keywords and refine description ([3d8688a](https://github.com/benquarmby/fail-on-console/commit/3d8688aa33ce9a717adb7e01b0f8431cbd86ea0e))
+
 ## [1.1.0](https://github.com/benquarmby/fail-on-console/compare/v1.0.1...v1.1.0) (2026-07-06)
 
 
