@@ -1,7 +1,13 @@
 {
     "name": "fail-on-console",
     "version": "1.1.0",
-    "description": "Prevent console noise from obscuring test results.",
+    "description": "Fail Vitest or Jest tests when unexpected console logs, warnings or errors occur.",
+    "keywords": [
+        "jest",
+        "vitest",
+        "console",
+        "testing"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/benquarmby/fail-on-console"
