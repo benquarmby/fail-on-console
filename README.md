@@ -1,16 +1,18 @@
 # Fail on Console
 
-Prevent console noise from obscuring test results.
+Fail Vitest or Jest tests when unexpected console logs, warnings or errors occur.
 
-This utility fails tests whenever unexpected `console` logs, warnings, or errors are triggered. It is compatible with Vitest and Jest.
+[![npm version](https://img.shields.io/npm/v/fail-on-console.svg)](https://www.npmjs.com/package/fail-on-console)
+[![license](https://img.shields.io/npm/l/fail-on-console.svg)](https://github.com/benquarmby/fail-on-console/blob/main/LICENSE)
+
+The `fail-on-console` utility fails test suites whenever unexpected `console` logs, warnings, or errors are triggered, keeping test results clear and easy to read.
 
 ## Features
 
-- **Framework Agnostic**: Integrates with Vitest, Jest, or any framework exposing standard lifecycle hooks and `expect.getState()`.
-- **Zero Dependencies**: Pure, lightweight JavaScript with a minimal footprint.
-- **Browser Ready**: Contains no Node.js API dependencies, allowing it to run inside Vitest Browser Mode.
-- **Configurable Targets**: Allows explicit selection of which console methods to monitor.
-- **Flexible Allowlist**: Suppresses known or expected console outputs globally, per suite, or per individual test. Exceptions can be matched against strings, regular expressions, or custom predicate functions.
+- **⚡ Vitest and Jest Native**: Seamless integration with Vitest (including Browser Mode) and Jest using standard lifecycle hooks.
+- **🪶 Zero Dependencies**: Pure, lightweight JavaScript with a tiny footprint.
+- **🎯 Configurable Targets**: Choose exactly which console methods to monitor (`log`, `warn`, `error`, `info`, `debug`).
+- **📋 Flexible Allowlist**: Easily suppress expected console noise globally, per suite, or per test using strings, regular expressions, or custom predicates.
 
 ## Installation
 
@@ -27,11 +29,12 @@ yarn add --dev fail-on-console
 
 ## Setup
 
-`setupConsole` should be called once in a global setup file, accepting the lifecycle hooks and `expect` utility from the testing framework.
-
 ### With Vitest
 
-```ts
+Initialize `setupConsole` inside a configured [`setupFiles`](https://vitest.dev/config/setupfiles) module (e.g., `vitest.setup.js`).
+
+```js
+// vitest.setup.js
 import {beforeEach, afterEach, expect} from "vitest";
 import {setupConsole} from "fail-on-console";
 
@@ -40,7 +43,10 @@ setupConsole({beforeEach, afterEach, expect});
 
 ### With Jest
 
-```ts
+Initialize `setupConsole` inside a configured [`setupFilesAfterEnv`](https://jestjs.io/docs/configuration#setupfilesafterenv-array) module (e.g., `jest.setup.js`).
+
+```js
+// jest.setup.js
 import {beforeEach, afterEach, expect} from "@jest/globals";
 import {setupConsole} from "fail-on-console";
 
@@ -56,7 +62,7 @@ setupConsole({
     beforeEach,
     afterEach,
     expect,
-    // Fail on console.error, console.warn and console.debug.
+    // Fail on console.error, console.warn, and console.debug.
     methods: ["error", "warn", "debug"]
 });
 ```
