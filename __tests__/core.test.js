@@ -8,7 +8,7 @@ setupConsole({afterEach, beforeEach, expect});
 
 allowConsole("log", ["globally allowed message"]);
 
-describe("fail-on-console", function () {
+describe("fail-on-console core behavior", function () {
     allowConsole("warn", ["expected warning from a third-party library"]);
 
     it("should pass when console.warn is called with an allowed message", function () {
@@ -39,6 +39,18 @@ describe("fail-on-console", function () {
 
     itFails("should fail the test when an un-allowed console error occurs", function () {
         console.warn("completely unexpected warning");
+    });
+
+    it("should fail when trying to allow calls to the assert method", function () {
+        expect(() => allowConsole("assert", "nope")).toThrow(
+            'fail-on-console: Unsupported console method provided: "assert". Supported methods are: "error", "warn", "info", "log", "debug".'
+        );
+    });
+
+    it("should fail when trying to allow calls to an unknown method", function () {
+        expect(() => allowConsole("warning", "unknown")).toThrow(
+            'fail-on-console: Unsupported console method provided: "warning". Supported methods are: "error", "warn", "info", "log", "debug".'
+        );
     });
 
     describe("rule types", function () {

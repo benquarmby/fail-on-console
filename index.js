@@ -1,8 +1,35 @@
 let testApi;
-const defaultMethods = ["error", "warn", "info", "log"];
+const supportedMethods = ["error", "warn", "info", "log", "debug"];
+// Everything but console.debug is monitored by default. Debug logging in tests
+// is usually intentional.
+const defaultMethods = supportedMethods.slice(0, -1);
 const allowed = new Map();
 // %s string, %d/%i integer, %o object, %f float
 const printfPattern = /%[sdiof]/g;
+
+function quoteString(value) {
+    return `"${value}"`;
+}
+
+function assertSupportedMethods(methods) {
+    if (!Array.isArray(methods)) {
+        throw new Error("fail-on-console: Expected an array of console methods.");
+    }
+
+    const unsupported = methods.filter((method) => !supportedMethods.includes(method));
+
+    if (!unsupported.length) {
+        return;
+    }
+
+    const method = unsupported.length === 1 ? "method" : "methods";
+    const invalidList = unsupported.map(quoteString).join(", ");
+    const validList = supportedMethods.map(quoteString).join(", ");
+
+    throw new Error(
+        `fail-on-console: Unsupported console ${method} provided: ${invalidList}. Supported methods are: ${validList}.`
+    );
+}
 
 /**
  * Basic implementation of node:util/format for console message formatting.
@@ -51,6 +78,8 @@ function setupConsole({beforeEach, afterEach, expect, methods = defaultMethods})
         throw new Error("fail-on-console: Call setupConsole() only once.");
     }
 
+    assertSupportedMethods(methods);
+
     testApi = {beforeEach, afterEach, expect};
 
     beforeEach(() => allowed.clear());
@@ -97,6 +126,8 @@ function allowConsole(method, rules) {
     if (!testApi) {
         throw new Error("fail-on-console: Call setupConsole() before using allowConsole().");
     }
+
+    assertSupportedMethods([method]);
 
     const normalized = Array.isArray(rules) ? rules : [rules];
     const isInsideTest = !!testApi.expect.getState().currentTestName;
