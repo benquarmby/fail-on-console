@@ -112,7 +112,17 @@ Registers a temporary or global allowlist rule for a monitored console method.
 
 ## Limitations
 
+### Concurrency
+
 `fail-on-console` is not compatible with concurrent asynchronous tests (e.g., `test.concurrent`). Because concurrent tests execute simultaneously within the same environment context, console logs cannot be isolated reliably per individual test. For suites requiring specific log suppression, tests must be run sequentially.
+
+### Assert
+
+Monitoring `console.assert` is currently unsupported. It has a distinct signature and unique assertion mechanics compared to standard logging methods.
+
+### Mocha
+
+Mocha is unsupported due to API incompatibilities related to test context. There are no clean or reliable workarounds for integration.
 
 ## Credits & Prior Art
 
