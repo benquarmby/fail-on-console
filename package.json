@@ -28,7 +28,7 @@
     },
     "devDependencies": {
         "@commitlint/config-conventional": "^21.2.0",
-        "@vitest/coverage-v8": "4.1.9",
+        "@vitest/coverage-v8": "4.1.10",
         "commitlint": "^21.2.0",
         "jest": "^30.4.2",
         "prettier": "^3.8.4",
