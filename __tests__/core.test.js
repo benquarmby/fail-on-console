@@ -1,7 +1,11 @@
 const {allowConsole, setupConsole} = require("..");
 
+// Mocha needs side effects to be in a hook. All other frameworks can
+// immediately apply them.
+const before = globalThis.before ?? ((fn) => fn());
+
 describe("fail-on-console core behavior", function () {
-    allowConsole("warn", ["expected warning from a third-party library"]);
+    before(() => allowConsole("warn", ["expected warning from a third-party library"]));
 
     it("should pass when console.warn is called with an allowed message", function () {
         console.warn("expected warning from a third-party library");
@@ -12,7 +16,7 @@ describe("fail-on-console core behavior", function () {
     });
 
     describe("nested scopes", function () {
-        allowConsole("error", ["expected error from a nested suite"]);
+        before(() => allowConsole("error", ["expected error from a nested suite"]));
 
         it("should pass when both allowed messages are called", function () {
             console.warn("expected warning from a third-party library");
@@ -71,7 +75,7 @@ describe("fail-on-console core behavior", function () {
 
     describe("scope and isolation", function () {
         describe("describe block", function () {
-            allowConsole("error", ["scoped error message"]);
+            before(() => allowConsole("error", ["scoped error message"]));
 
             it("should allow the message within this explicit scope", function () {
                 console.error("scoped error message");

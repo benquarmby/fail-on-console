@@ -41,7 +41,7 @@ export function setup(options: SetupOptions): void;
  * Installs console spies that fail the current test if any monitored console
  * method is called. Call once at the top of the test setup file, passing the
  * lifecycle hooks from the test framework. Compatible with any Jest-like API
- * (Vitest, Jest, etc.).
+ * (Vitest, Jest, Mocha, etc.).
  * @param {Object} options
  * @param {Function} options.beforeEach The beforeEach hook from the test framework.
  * @param {Function} options.afterEach The afterEach hook from the test framework.

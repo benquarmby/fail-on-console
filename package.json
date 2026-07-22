@@ -23,14 +23,17 @@
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "test:jest": "jest",
+        "test:mocha": "mocha",
         "test:vitest": "vitest run --coverage",
-        "verify": "run-s commit:check format:check test:vitest test:jest"
+        "verify": "run-s commit:check format:check test:vitest test:jest test:mocha"
     },
     "devDependencies": {
         "@commitlint/config-conventional": "^21.2.0",
         "@vitest/coverage-v8": "4.1.10",
         "commitlint": "^21.2.1",
+        "expect": "^30.4.1",
         "jest": "^30.4.2",
+        "mocha": "^11.7.6",
         "npm-run-all2": "^9.0.2",
         "prettier": "^3.9.6",
         "prettier-plugin-packagejson": "^3.0.2",
