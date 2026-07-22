@@ -1,6 +1,6 @@
 # Fail on Console
 
-Fail Vitest or Jest tests when unexpected console logs, warnings or errors occur.
+Fail Vitest, Jest, or Mocha tests when unexpected console logs, warnings or errors occur.
 
 [![npm version](https://img.shields.io/npm/v/fail-on-console.svg)](https://www.npmjs.com/package/fail-on-console)
 [![license](https://img.shields.io/npm/l/fail-on-console.svg)](https://github.com/benquarmby/fail-on-console/blob/main/LICENSE)
@@ -9,7 +9,7 @@ The `fail-on-console` utility fails test suites whenever unexpected `console` lo
 
 ## Features
 
-- **⚡ Vitest and Jest Native**: Seamless integration with Vitest (including Browser Mode) and Jest using standard lifecycle hooks.
+- **⚡ Vitest, Jest, and Mocha Native**: Seamless integration with Vitest (including Browser Mode), Jest, and Mocha using standard lifecycle hooks.
 - **🪶 Zero Dependencies**: Pure, lightweight JavaScript with a tiny footprint.
 - **🎯 Configurable Targets**: Choose exactly which console methods to monitor (`log`, `warn`, `error`, `info`, `debug`).
 - **📋 Flexible Allowlist**: Easily suppress expected console noise globally, per suite, or per test using strings, regular expressions, or custom predicates.
@@ -49,6 +49,17 @@ Initialize `setupConsole` inside a configured [`setupFilesAfterEnv`](https://jes
 // jest.setup.js
 import {beforeEach, afterEach} from "@jest/globals";
 import {setupConsole} from "fail-on-console";
+
+setupConsole({beforeEach, afterEach});
+```
+
+### With Mocha
+
+Initialize `setupConsole` inside a configured [`require`](https://mochajs.org/running/configuring/) module (e.g., `mocha.setup.js`).
+
+```js
+// mocha.setup.js
+const {setupConsole} = require("fail-on-console");
 
 setupConsole({beforeEach, afterEach});
 ```
@@ -117,10 +128,6 @@ Registers a temporary or global allowlist rule for a monitored console method.
 ### Assert
 
 Monitoring `console.assert` is currently unsupported. It has a distinct signature and unique assertion mechanics compared to standard logging methods.
-
-### Mocha
-
-Mocha is unsupported due to API incompatibilities related to test context. There are no clean or reliable workarounds for integration.
 
 ## Credits & Prior Art
 
