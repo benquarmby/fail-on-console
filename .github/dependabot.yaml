@@ -1,0 +1,22 @@
+version: 2
+updates:
+  # NPM dependencies
+  - commit-message:
+      prefix: "chore"
+    directory: "/"
+    package-ecosystem: "npm"
+    schedule:
+      day: "saturday"
+      interval: "weekly"
+      time: "04:00"
+      timezone: "America/Los_Angeles"
+  # GHA dependencies
+  - commit-message:
+      prefix: "ci"
+    directory: "/"
+    package-ecosystem: "github-actions"
+    schedule:
+      day: "saturday"
+      interval: "weekly"
+      time: "04:00"
+      timezone: "America/Los_Angeles"
