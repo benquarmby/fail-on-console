@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/benquarmby/fail-on-console/compare/v1.1.1...v1.1.2) (2026-07-22)
+
+
+### Bug Fixes
+
+* guard against invalid and unsupported console methods ([504fa30](https://github.com/benquarmby/fail-on-console/commit/504fa301e245d0965afdfaf3c31d2d3b9a0cb10c))
+
 ## [1.1.1](https://github.com/benquarmby/fail-on-console/compare/v1.1.0...v1.1.1) (2026-07-08)
 
 
