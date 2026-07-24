@@ -35,10 +35,10 @@ Initialize `setupConsole` inside a configured [`setupFiles`](https://vitest.dev/
 
 ```js
 // vitest.setup.js
-import {beforeEach, afterEach, expect} from "vitest";
+import {beforeEach, afterEach} from "vitest";
 import {setupConsole} from "fail-on-console";
 
-setupConsole({beforeEach, afterEach, expect});
+setupConsole({beforeEach, afterEach});
 ```
 
 ### With Jest
@@ -47,10 +47,10 @@ Initialize `setupConsole` inside a configured [`setupFilesAfterEnv`](https://jes
 
 ```js
 // jest.setup.js
-import {beforeEach, afterEach, expect} from "@jest/globals";
+import {beforeEach, afterEach} from "@jest/globals";
 import {setupConsole} from "fail-on-console";
 
-setupConsole({beforeEach, afterEach, expect});
+setupConsole({beforeEach, afterEach});
 ```
 
 ### Customizing Monitored Methods
@@ -61,7 +61,6 @@ By default, `debug` is not monitored but `error`, `warn`, `info`, and `log` are.
 setupConsole({
     beforeEach,
     afterEach,
-    expect,
     // Fail on console.error, console.warn, and console.debug.
     methods: ["error", "warn", "debug"]
 });
@@ -97,7 +96,6 @@ Initializes console spies that monitor active tests.
 
 - `options.beforeEach`: The framework's `beforeEach` hook.
 - `options.afterEach`: The framework's `afterEach` hook.
-- `options.expect`: The framework's `expect` object (must expose `getState()`).
 - `options.methods`: _(Optional)_ Array of `console` methods to track. Defaults to `["error", "warn", "info", "log"]`.
 
 ### `allowConsole(method, rules)`
