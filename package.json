@@ -33,7 +33,7 @@
         "jest": "^30.4.2",
         "prettier": "^3.8.4",
         "prettier-plugin-packagejson": "^3.0.2",
-        "vitest": "^4.1.9"
+        "vitest": "^4.1.10"
     },
     "packageManager": "pnpm@11.7.0"
 }
