@@ -2,3 +2,4 @@ allowBuilds:
   unrs-resolver: false
 
 shellEmulator: true
+strictPeerDependencies: true
