@@ -10,6 +10,7 @@ updates:
       interval: "weekly"
       time: "04:00"
       timezone: "America/Los_Angeles"
+    versioning-strategy: increase
   # GHA dependencies
   - commit-message:
       prefix: "ci"
