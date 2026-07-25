@@ -1,0 +1,29 @@
+{
+    $schema: "https://docs.renovatebot.com/renovate-schema.json",
+    extends: ["config:recommended"],
+    packageRules: [
+        {
+            matchDepTypes: ["dependencies"],
+            matchManagers: ["npm"],
+            semanticCommitType: "fix"
+        },
+        {
+            matchDepTypes: ["devDependencies"],
+            matchManagers: ["npm"],
+            semanticCommitType: "chore"
+        },
+        {
+            matchManagers: ["github-actions"],
+            semanticCommitType: "ci"
+        }
+    ],
+    rangeStrategy: "bump",
+    rebaseWhen: "behind-base-branch",
+    schedule: ["before 4am on Saturday"],
+    semanticCommits: "enabled",
+    semanticCommitScope: "",
+    timezone: "America/Los_Angeles",
+    vulnerabilityAlerts: {
+        schedule: ["before 4am on Saturday"]
+    }
+}
