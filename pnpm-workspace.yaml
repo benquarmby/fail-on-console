@@ -3,3 +3,4 @@ allowBuilds:
 
 shellEmulator: true
 strictPeerDependencies: true
+updateNotifier: false
