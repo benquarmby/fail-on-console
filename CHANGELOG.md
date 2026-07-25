@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/benquarmby/fail-on-console/compare/v1.1.2...v1.2.0) (2026-07-25)
+
+
+### Features
+
+* do not require expect API in setupConsole ([04c0bad](https://github.com/benquarmby/fail-on-console/commit/04c0bad55f39773e6fb326f6364a5c64d46b3e0f))
+
 ## [1.1.2](https://github.com/benquarmby/fail-on-console/compare/v1.1.1...v1.1.2) (2026-07-22)
 
 
