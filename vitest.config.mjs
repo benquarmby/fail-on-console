@@ -7,6 +7,11 @@ const baseConfig = {
 
 export default defineConfig({
     test: {
+        coverage: {
+            provider: "v8",
+            reporter: ["html", "json-summary", "json", "text"],
+            reportOnFailure: true
+        },
         projects: [
             {
                 test: {
@@ -23,6 +28,7 @@ export default defineConfig({
                     name: "validation"
                 }
             }
-        ]
+        ],
+        reporters: ["default", "github-actions"]
     }
 });
