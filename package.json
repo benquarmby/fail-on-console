@@ -24,7 +24,7 @@
         "format:check": "prettier --check .",
         "test:jest": "jest",
         "test:vitest": "vitest run --coverage",
-        "verify": "run-s format:check test:vitest test:jest"
+        "verify": "run-s commit:check format:check test:vitest test:jest"
     },
     "devDependencies": {
         "@commitlint/config-conventional": "^21.2.0",
