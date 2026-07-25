@@ -15,7 +15,7 @@ importers:
         specifier: 4.1.10
         version: 4.1.10(vitest@4.1.10)
       commitlint:
-        specifier: ^21.2.0
+        specifier: ^21.2.1
         version: 21.2.1(@types/node@25.9.3)(conventional-commits-parser@7.1.0)(typescript@6.0.3)
       jest:
         specifier: ^30.4.2
