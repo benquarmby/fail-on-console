@@ -1,11 +1,15 @@
-let testApi;
 const supportedMethods = ["error", "warn", "info", "log", "debug"];
 // Everything but console.debug is monitored by default. Debug logging in tests
 // is usually intentional.
 const defaultMethods = supportedMethods.slice(0, -1);
-const allowed = new Map();
 // %s string, %d/%i integer, %o object, %f float
 const printfPattern = /%[sdiof]/g;
+
+// Module scoped variables to manage test state. Not safe for concurrent tests.
+// Test frameworks run tests serially by default.
+let testApi;
+let isInsideTest = false;
+const allowed = new Map();
 
 function quoteString(value) {
     return `"${value}"`;
@@ -73,16 +77,23 @@ function isAllowed(message, rule) {
     return rule.test(message);
 }
 
-function setupConsole({beforeEach, afterEach, expect, methods = defaultMethods}) {
+function setupConsole({beforeEach, afterEach, methods = defaultMethods}) {
     if (testApi) {
         throw new Error("fail-on-console: Call setupConsole() only once.");
     }
 
     assertSupportedMethods(methods);
 
-    testApi = {beforeEach, afterEach, expect};
+    testApi = {beforeEach, afterEach};
 
-    beforeEach(() => allowed.clear());
+    beforeEach(function () {
+        isInsideTest = true;
+        allowed.clear();
+    });
+
+    afterEach(function () {
+        isInsideTest = false;
+    });
 
     methods.forEach(function (method) {
         const original = console[method];
@@ -130,7 +141,6 @@ function allowConsole(method, rules) {
     assertSupportedMethods([method]);
 
     const normalized = Array.isArray(rules) ? rules : [rules];
-    const isInsideTest = !!testApi.expect.getState().currentTestName;
 
     function addRules() {
         const existing = allowed.get(method) ?? [];

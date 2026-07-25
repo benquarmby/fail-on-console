@@ -1,11 +1,6 @@
-const {allowConsole, setupConsole, setup} = require("..");
+const {allowConsole, setupConsole} = require("..");
 
-// Jest doesn't include `afterEach` failures within `it.failing`. Only vitest
-// can be used to cover true positive assertion failures.
-const itFails = globalThis.vitest ? it.fails : it.skip;
-
-setupConsole({afterEach, beforeEach, expect});
-
+setupConsole({afterEach, beforeEach});
 allowConsole("log", ["globally allowed message"]);
 
 describe("fail-on-console core behavior", function () {
@@ -16,7 +11,7 @@ describe("fail-on-console core behavior", function () {
     });
 
     it("should disallow calling setup twice", function () {
-        expect(() => setupConsole({afterEach, beforeEach, expect})).toThrow(/Call setupConsole\(\) only once./);
+        expect(() => setupConsole({afterEach, beforeEach})).toThrow(/Call setupConsole\(\) only once./);
     });
 
     describe("nested scopes", function () {
@@ -37,7 +32,7 @@ describe("fail-on-console core behavior", function () {
         console.info("unexpected inline info message");
     });
 
-    itFails("should fail the test when an un-allowed console error occurs", function () {
+    it.fails?.("should fail the test when an un-allowed console error occurs", function () {
         console.warn("completely unexpected warning");
     });
 
@@ -87,7 +82,7 @@ describe("fail-on-console core behavior", function () {
         });
 
         describe("sibling describe block", function () {
-            itFails("should fail because the sibling describe rule doesn't leak sideways", function () {
+            it.fails?.("should fail because the sibling describe rule doesn't leak sideways", function () {
                 console.error("scoped error message");
             });
         });
@@ -97,7 +92,7 @@ describe("fail-on-console core behavior", function () {
             console.warn("inline warn message");
         });
 
-        itFails("should fail because the previous inline rule doesn't leak downward", function () {
+        it.fails?.("should fail because the previous inline rule doesn't leak downward", function () {
             console.warn("inline warn message");
         });
     });
@@ -107,12 +102,12 @@ describe("fail-on-console core behavior", function () {
      * mutated at module scope, much like fail-on-console handles allow rules.
      */
     describe("concurrent gap", function () {
-        it.concurrent("should report the wrong test name given a slow timeout", async function () {
+        it.concurrent?.("should report the wrong test name given a slow timeout", async function () {
             await new Promise((resolve) => setTimeout(resolve, 50));
             expect(expect.getState().currentTestName).toMatch(/fast timeout$/);
         });
 
-        it.concurrent("should report the correct test name given a fast timeout", async function () {
+        it.concurrent?.("should report the correct test name given a fast timeout", async function () {
             await new Promise((resolve) => setTimeout(resolve, 10));
             expect(expect.getState().currentTestName).toMatch(/fast timeout$/);
         });

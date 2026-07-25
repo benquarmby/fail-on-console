@@ -1,5 +1,5 @@
 const {setupConsole, allowConsole} = require("..");
-const testApi = {beforeEach, afterEach, expect};
+const testApi = {beforeEach, afterEach};
 
 // Setup validation must run in a separate suite because setupConsole can only
 // be run successfully once per global scope.

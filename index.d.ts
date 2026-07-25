@@ -15,7 +15,10 @@ export interface LifecycleHookLike {
 export interface TestApi {
     beforeEach: LifecycleHookLike;
     afterEach: LifecycleHookLike;
-    expect: ExpectLike;
+    /**
+     * @deprecated No longer needed. This option can be omitted.
+     */
+    expect?: ExpectLike;
 }
 
 export interface SetupOptions extends TestApi {
@@ -37,25 +40,24 @@ export function setup(options: SetupOptions): void;
 /**
  * Installs console spies that fail the current test if any monitored console
  * method is called. Call once at the top of the test setup file, passing the
- * lifecycle hooks and expect function from the test framework. Compatible with
- * any Jest-compatible API (Jest, Vitest, etc.).
+ * lifecycle hooks from the test framework. Compatible with any Jest-like API
+ * (Vitest, Jest, etc.).
  * @param {Object} options
  * @param {Function} options.beforeEach The beforeEach hook from the test framework.
  * @param {Function} options.afterEach The afterEach hook from the test framework.
- * @param {Object} options.expect The expect object from the test framework. Must expose getState().
  * @param {string[]} [options.methods=["error","warn","info","log"]] Console methods to monitor.
  * @example
- * // Jest
- * import {beforeEach, afterEach, expect} from "@jest/globals";
- * import {setup} from "fail-on-console";
- *
- * setup({beforeEach, afterEach, expect});
- * @example
  * // Vitest
- * import {beforeEach, afterEach, expect} from "vitest";
+ * import {beforeEach, afterEach} from "vitest";
  * import {setup} from "fail-on-console";
  *
- * setup({beforeEach, afterEach, expect});
+ * setup({beforeEach, afterEach});
+ * @example
+ * // Jest
+ * import {beforeEach, afterEach} from "@jest/globals";
+ * import {setup} from "fail-on-console";
+ *
+ * setup({beforeEach, afterEach});
  */
 export function setupConsole(options: SetupOptions): void;
 
