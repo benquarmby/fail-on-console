@@ -40,9 +40,9 @@ jobs:
       - name: Check Format
         run: pnpm format:check
       - name: Test with Vitest
-        run: pnpm test:cover
+        run: pnpm test:vitest
       - name: Test with Jest
-        run: pnpm test:compat
+        run: pnpm test:jest
       - name: Release Please
         if: github.event_name == 'push'
         uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0

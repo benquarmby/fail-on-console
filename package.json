@@ -22,9 +22,8 @@
         "commit:check": "commitlint --from-last-tag",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
-        "test": "vitest run",
-        "test:compat": "jest",
-        "test:cover": "vitest run --coverage"
+        "test:jest": "jest",
+        "test:vitest": "vitest run --coverage"
     },
     "devDependencies": {
         "@commitlint/config-conventional": "^21.2.0",
