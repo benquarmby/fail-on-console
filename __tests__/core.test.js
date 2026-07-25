@@ -1,8 +1,5 @@
 const {allowConsole, setupConsole} = require("..");
 
-setupConsole({afterEach, beforeEach});
-allowConsole("log", ["globally allowed message"]);
-
 describe("fail-on-console core behavior", function () {
     allowConsole("warn", ["expected warning from a third-party library"]);
 
