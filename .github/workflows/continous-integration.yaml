@@ -39,6 +39,8 @@ jobs:
         run: pnpm commit:check
       - name: Check Format
         run: pnpm format:check
+      - name: Check Types
+        run: pnpm type:check
       - name: Test with Vitest
         run: pnpm test:vitest
       - name: Test with Jest
