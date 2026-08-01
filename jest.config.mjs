@@ -1,14 +1,17 @@
+const validationSuite = "<rootDir>/__tests__/validation.test.js";
+
 export default {
     testEnvironment: "node",
     projects: [
         {
             displayName: "core",
-            setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
-            testMatch: ["<rootDir>/__tests__/core.test.js"]
+            setupFilesAfterEnv: ["<rootDir>/test.setup.js"],
+            testMatch: ["<rootDir>/__tests__/*.test.js"],
+            testPathIgnorePatterns: [validationSuite]
         },
         {
             displayName: "validation",
-            testMatch: ["<rootDir>/__tests__/validation.test.js"]
+            testMatch: [validationSuite]
         }
     ]
 };
