@@ -5,13 +5,14 @@ Fail Vitest or Jest tests when unexpected console logs, warnings or errors occur
 [![npm version](https://img.shields.io/npm/v/fail-on-console.svg)](https://www.npmjs.com/package/fail-on-console)
 [![license](https://img.shields.io/npm/l/fail-on-console.svg)](https://github.com/benquarmby/fail-on-console/blob/main/LICENSE)
 
-The `fail-on-console` utility fails test suites whenever unexpected `console` logs, warnings, or errors are triggered, keeping test results clear and easy to read.
+The `fail-on-console` utility fails test suites whenever unexpected `console` output or `process` writes are triggered, keeping test results clear and easy to read.
 
 ## Features
 
 - **⚡ Vitest and Jest Native**: Seamless integration with Vitest (including Browser Mode) and Jest using standard lifecycle hooks.
+- **📡 Raw Stream Monitoring:** Fails on unexpected writes to `process.stdout` or `process.stderr` on top of standard console calls. Output from libraries that write directly to the stream doesn't slip through.
 - **🪶 Zero Dependencies**: Pure, lightweight JavaScript with a tiny footprint.
-- **🎯 Configurable Targets**: Choose exactly which console methods to monitor (`log`, `warn`, `error`, `info`, `debug`).
+- **🎯 Configurable Targets**: Choose exactly which console methods and / or process streams to monitor.
 - **📋 Flexible Allowlist**: Easily suppress expected console noise globally, per suite, or per test using strings, regular expressions, or custom predicates.
 
 ## Installation
@@ -53,39 +54,42 @@ import {setupConsole} from "fail-on-console";
 setupConsole({beforeEach, afterEach});
 ```
 
-### Customizing Monitored Methods
+### Customizing Monitored Methods and Streams
 
-By default, `debug` is not monitored but `error`, `warn`, `info`, and `log` are. This can be customized by passing a `methods` array:
+By default, `console.debug` is not monitored but `error`, `warn`, `info`, and `log` are. This can be customized by passing a `methods` array. Similarly, `process.stdout` and `process.stderr` are not monitored by default, but can be configured with a `streams` array:
 
 ```ts
 setupConsole({
     beforeEach,
     afterEach,
     // Fail on console.error, console.warn, and console.debug.
-    methods: ["error", "warn", "debug"]
+    methods: ["error", "warn", "debug"],
+    // Fail when libraries like Bunyan write straight to process.stdout,
+    // bypassing console entirely.
+    streams: ["stdout", "stderr"]
 });
 ```
 
 ## Suppressing Expected Logs
 
-If a specific test or third-party dependency intentionally logs to the console, `allowConsole` can be used to allow the test to pass.
+If a specific test or third-party dependency intentionally logs to the console, `allowConsole` and `allowStream` can be used to allow the test to pass.
 
-`allowConsole` can be invoked globally, inside a `describe` block, or inside a specific `test`/`it` block.
+These functions can be invoked globally, inside a `describe` block, or inside a specific `test`/`it` block.
 
 ```javascript
-import {allowConsole} from "fail-on-console";
+import {allowConsole, allowStream} from "fail-on-console";
 
 // Allow a substring.
 allowConsole("warn", "third-party library warning");
 
 // Allow a Regular Expression.
-allowConsole("error", /^Warning: Each child in a list/);
+allowStream("stderr", /^Warning: Each child in a list/);
 
 // Allow with a custom predicate function
 allowConsole("log", (message) => message.startsWith("[analytics]"));
 
 // An array of mixed matchers
-allowConsole("error", ["known warning", /deprecated/, (msg) => msg.includes("third-party")]);
+allowStream("stdout", ["known warning", /deprecated/, (msg) => msg.includes("third-party")]);
 ```
 
 ## API Reference
@@ -97,6 +101,7 @@ Initializes console spies that monitor active tests.
 - `options.beforeEach`: The framework's `beforeEach` hook.
 - `options.afterEach`: The framework's `afterEach` hook.
 - `options.methods`: _(Optional)_ Array of `console` methods to track. Defaults to `["error", "warn", "info", "log"]`.
+- `options.streams`: _(Optional)_ Array of `process` streams to track. Defaults to `[]` (no streams monitored).
 
 ### `allowConsole(method, rules)`
 
@@ -105,6 +110,16 @@ Registers a temporary or global allowlist rule for a monitored console method.
 - `method`: `"error" | "warn" | "info" | "log" | "debug"`
 - `rules`: A single rule or an array of rules. A rule can be:
     - `string`: Allowed if the console message contains this substring.
+    - `RegExp`: Allowed if the regex tests true against the message.
+    - `Function`: A predicate `(message: string) => boolean` returning `true` to allow the message.
+
+### `allowStream(stream, rules)`
+
+Registers a temporary or global allowlist rule for a monitored process stream.
+
+- `stream`: `"stdout" | "stderr"`
+- `rules`: A single rule or an array of rules. A rule can be:
+    - `string`: Allowed if the written message contains this substring.
     - `RegExp`: Allowed if the regex tests true against the message.
     - `Function`: A predicate `(message: string) => boolean` returning `true` to allow the message.
 
@@ -121,6 +136,10 @@ Monitoring `console.assert` is currently unsupported. It has a distinct signatur
 ### Mocha
 
 Mocha is unsupported due to API incompatibilities related to test context. There are no clean or reliable workarounds for integration.
+
+### Browser Mode
+
+`process.stdout` and `process.stderr` don't exist in a real browser environment, so the `streams` option has no effect under Vitest Browser Mode. `setupConsole` detects this and silently skips stream monitoring rather than throwing. `methods` monitoring is unaffected and works normally.
 
 ## Credits & Prior Art
 
