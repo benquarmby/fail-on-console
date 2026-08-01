@@ -105,4 +105,4 @@ export function allowConsole(method: ConsoleMethod, rules: AllowRule | AllowRule
  * // Mixed array - allow standard errors using multiple rules at once
  * allowStream("stderr", ["known warning", /deprecated/, (m) => m.includes("third-party")]);
  */
-export function allowStream(stream: ProcessStream, rules: Rule | Rule[]): void;
+export function allowStream(stream: ProcessStream, rules: AllowRule | AllowRule[]): void;
