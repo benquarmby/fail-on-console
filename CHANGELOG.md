@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/benquarmby/fail-on-console/compare/v1.3.0...v1.3.1) (2026-08-01)
+
+
+### Bug Fixes
+
+* use correct rule type for allowStream declaration ([23fe420](https://github.com/benquarmby/fail-on-console/commit/23fe42050a7a46959ea6f2b68204a41e424bcacc))
+
 ## [1.3.0](https://github.com/benquarmby/fail-on-console/compare/v1.2.0...v1.3.0) (2026-08-01)
 
 
