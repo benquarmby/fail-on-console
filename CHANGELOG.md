@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/benquarmby/fail-on-console/compare/v1.2.0...v1.3.0) (2026-08-01)
+
+
+### Features
+
+* support process.stdout and process.stderr monitoring ([a79f82f](https://github.com/benquarmby/fail-on-console/commit/a79f82fa6ea778d44e8a59654f89bdd66464ab76))
+
 ## [1.2.0](https://github.com/benquarmby/fail-on-console/compare/v1.1.2...v1.2.0) (2026-07-25)
 
 
