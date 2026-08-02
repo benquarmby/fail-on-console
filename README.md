@@ -58,7 +58,7 @@ setupConsole({beforeEach, afterEach});
 
 By default, `console.debug` is not monitored but `error`, `warn`, `info`, and `log` are. This can be customized by passing a `methods` array. Similarly, `process.stdout` and `process.stderr` are not monitored by default, but can be configured with a `streams` array:
 
-```ts
+```js
 setupConsole({
     beforeEach,
     afterEach,
@@ -70,13 +70,27 @@ setupConsole({
 });
 ```
 
+### Using a Custom Formatter
+
+By default, a lightweight and browser compatible equivalent of the Node.js [`util.format()`](https://nodejs.org/api/util.html#utilformatformat-args) function is used for `printf`-like formatting of console messages. It covers the most common use cases but has limitations. If a more accurate and complete implementation is required, pass it as the `format` option:
+
+```js
+import util from "node:util";
+
+setupConsole({
+    beforeEach,
+    afterEach,
+    format: util.format
+});
+```
+
 ## Suppressing Expected Logs
 
 If a specific test or third-party dependency intentionally logs to the console, `allowConsole` and `allowStream` can be used to allow the test to pass.
 
 These functions can be invoked globally, inside a `describe` block, or inside a specific `test`/`it` block.
 
-```javascript
+```js
 import {allowConsole, allowStream} from "fail-on-console";
 
 // Allow a substring.

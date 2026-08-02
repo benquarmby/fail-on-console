@@ -13,6 +13,10 @@ export interface LifecycleHookLike {
     (fn: () => void): void;
 }
 
+export interface FormatLike {
+    (format?: any, ...args: any[]): string;
+}
+
 export interface TestApi {
     beforeEach: LifecycleHookLike;
     afterEach: LifecycleHookLike;
@@ -25,6 +29,7 @@ export interface TestApi {
 export interface SetupOptions extends TestApi {
     methods?: ConsoleMethod[];
     streams?: ProcessStream[];
+    format?: FormatLike;
 }
 
 export interface AllowPredicate {
@@ -47,6 +52,7 @@ export function setup(options: SetupOptions): void;
  * @param {Object} options
  * @param {Function} options.beforeEach The beforeEach hook from the test framework.
  * @param {Function} options.afterEach The afterEach hook from the test framework.
+ * @param {Function} [options.format] Optional function to format console messages. Uses a basic shim by default.
  * @param {string[]} [options.methods=["error","warn","info","log"]] Console methods to monitor.
  * @param {string[]} [options.streams=[]] Process streams to monitor. None by default.
  * @example

@@ -4,6 +4,7 @@ const baseConfig = {
     environment: "node",
     globals: true
 };
+const formattingSuite = "./__tests__/formatting.test.js";
 const validationSuite = "./__tests__/validation.test.js";
 
 export default defineConfig({
@@ -18,9 +19,16 @@ export default defineConfig({
                 test: {
                     ...baseConfig,
                     include: ["./__tests__/*.test.js"],
-                    exclude: [validationSuite],
+                    exclude: [formattingSuite, validationSuite],
                     setupFiles: ["./test.setup.js"],
                     name: "core"
+                }
+            },
+            {
+                test: {
+                    ...baseConfig,
+                    include: [formattingSuite],
+                    name: "formatting"
                 }
             },
             {
