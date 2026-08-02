@@ -1,4 +1,5 @@
 const validationSuite = "<rootDir>/__tests__/validation.test.js";
+const formattingSuite = "<rootDir>/__tests__/formatting.test.js";
 
 export default {
     testEnvironment: "node",
@@ -7,7 +8,11 @@ export default {
             displayName: "core",
             setupFilesAfterEnv: ["<rootDir>/test.setup.js"],
             testMatch: ["<rootDir>/__tests__/*.test.js"],
-            testPathIgnorePatterns: [validationSuite]
+            testPathIgnorePatterns: [formattingSuite, validationSuite]
+        },
+        {
+            displayName: "formatting",
+            testMatch: [formattingSuite]
         },
         {
             displayName: "validation",

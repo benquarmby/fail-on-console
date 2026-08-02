@@ -41,6 +41,16 @@ describe("console method monitoring", function () {
         );
     });
 
+    it("should pretty print and space-join all arguments using the configured formatter", function () {
+        allowConsole("log", (message) => {
+            // This is not possible with the basic formatter.
+            expect(message).toBe("{ a: 1 } text 42");
+            return true;
+        });
+
+        console.log({a: 1}, "text", 42);
+    });
+
     describe("rule types", function () {
         it("should accept a single string matcher", function () {
             allowConsole("warn", "single string match");
@@ -62,134 +72,6 @@ describe("console method monitoring", function () {
             console.warn("first string match");
             console.warn("second regex match");
             console.warn("third predicate match");
-        });
-    });
-
-    describe("printf-style formatting", function () {
-        it("should substitute a %s string specifier", function () {
-            allowConsole("log", (message) => {
-                expect(message).toBe("hello world");
-                return true;
-            });
-
-            console.log("hello %s", "world");
-        });
-
-        it("should substitute %d and %i integer specifiers", function () {
-            allowConsole("log", (message) => {
-                expect(message).toBe("3 apples and 5 oranges");
-                return true;
-            });
-
-            console.log("%d apples and %i oranges", 3, 5);
-        });
-
-        it("should substitute a %f float specifier", function () {
-            allowConsole("log", (message) => {
-                expect(message).toBe("pi is roughly 3.14");
-                return true;
-            });
-
-            console.log("pi is roughly %f", 3.14);
-        });
-
-        it("should substitute multiple specifiers in positional order", function () {
-            allowConsole("log", (message) => {
-                expect(message).toBe("Ada is 36 years old");
-                return true;
-            });
-
-            console.log("%s is %d years old", "Ada", 36);
-        });
-
-        it("should append extra primitive arguments beyond the specifiers, space-joined and unquoted", function () {
-            allowConsole("log", (message) => {
-                expect(message).toBe("Ada says hi extra 42");
-                return true;
-            });
-
-            console.log("%s says hi", "Ada", "extra", 42);
-        });
-
-        it("should leave a specifier literal when there aren't enough arguments to fill it", function () {
-            allowConsole("log", (message) => {
-                expect(message).toBe("only one and %s");
-                return true;
-            });
-
-            console.log("%s and %s", "only one");
-        });
-
-        it("should produce an empty string for a call with no arguments", function () {
-            allowConsole("log", (message) => {
-                expect(message).toBe("");
-                return true;
-            });
-
-            console.log();
-        });
-
-        it.fails?.("should fail the test when the formatted message doesn't match what's expected", function () {
-            allowConsole("log", (message) => {
-                expect(message).toBe("this does not match");
-                return true;
-            });
-
-            console.log("hello %s", "world");
-        });
-    });
-
-    /**
-     * This suite explicitly calls out the known console formatting limitations
-     * covered by the README. Correct the tests before filling in the gaps in
-     * red-green-refactor style.
-     */
-    describe("printf-style known gaps", function () {
-        it("should stringify an object for a %o specifier instead of inspecting it", function () {
-            allowConsole("log", (message) => {
-                // Real console would be similar to "value: { a: 1 }"
-                expect(message).toBe("value: [object Object]");
-                expect(message).not.toBe("value: { a: 1 }");
-                return true;
-            });
-
-            console.log("value: %o", {a: 1});
-        });
-
-        it("should ignore specifiers outside the supported set, like %% or %j", function () {
-            allowConsole("log", (message) => {
-                // Node console would be similar to "100% done, extra: [Circular]"
-                expect(message).toBe("100%% done, extra: %j [object Object]");
-                expect(message).not.toBe("100% done, extra: [Circular]");
-                return true;
-            });
-
-            const circular = {};
-            circular.self = circular;
-
-            console.log("100%% done, extra: %j", circular);
-        });
-
-        it("should stringify and space-join all arguments, unquoted, when the first isn't a string", function () {
-            allowConsole("log", (message) => {
-                // Real console would be similar to "{ a: 1 } 'text' 42"
-                expect(message).toBe("[object Object] text 42");
-                expect(message).not.toBe("{ a: 1 } 'text' 42");
-                return true;
-            });
-
-            console.log({a: 1}, "text", 42);
-        });
-
-        it("should consume the next positional argument as-is, regardless of whether it matches the specifier's type", function () {
-            allowConsole("log", (message) => {
-                // Real console would be similar to "NaN"
-                expect(message).toBe("not a number");
-                expect(message).not.toBe("NaN");
-                return true;
-            });
-
-            console.log("%d", "not a number");
         });
     });
 

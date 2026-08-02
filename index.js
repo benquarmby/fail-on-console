@@ -53,7 +53,7 @@ function assertSupportedStreams(streams) {
  * @param {...*} args The list of arguments passed to the console method.
  * @returns {string} The formatted message string.
  */
-function format(...args) {
+function defaultFormat(...args) {
     const [format, ...values] = args;
 
     if (typeof format !== "string") {
@@ -104,7 +104,13 @@ function chunkToString(chunk, encoding = "utf8") {
     return Buffer.from(chunk).toString(encoding);
 }
 
-function setupConsole({beforeEach, afterEach, methods = defaultMethods, streams = defaultStreams}) {
+function setupConsole({
+    beforeEach,
+    afterEach,
+    format = defaultFormat,
+    methods = defaultMethods,
+    streams = defaultStreams
+}) {
     if (testApi) {
         throw new Error("fail-on-console: Call setupConsole() only once.");
     }
