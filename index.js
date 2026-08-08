@@ -119,6 +119,10 @@ function setupConsole({
         throw new Error("fail-on-console: beforeEach and afterEach hooks must be provided.");
     }
 
+    if (typeof format !== "function") {
+        throw new Error("fail-on-console: A custom formatter must be a function.");
+    }
+
     assertSupportedMethods(methods);
     assertSupportedStreams(streams);
 
