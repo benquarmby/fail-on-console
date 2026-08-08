@@ -115,6 +115,10 @@ function setupConsole({
         throw new Error("fail-on-console: Call setupConsole() only once.");
     }
 
+    if (typeof beforeEach !== "function" || typeof afterEach !== "function") {
+        throw new Error("fail-on-console: beforeEach and afterEach hooks must be provided.");
+    }
+
     assertSupportedMethods(methods);
     assertSupportedStreams(streams);
 
