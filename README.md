@@ -114,6 +114,7 @@ Initializes console spies that monitor active tests.
 
 - `options.beforeEach`: The framework's `beforeEach` hook.
 - `options.afterEach`: The framework's `afterEach` hook.
+- `options.format`: _(Optional)_ A custom `printf`-like console message formatter. Defaults to a basic implementation.
 - `options.methods`: _(Optional)_ Array of `console` methods to track. Defaults to `["error", "warn", "info", "log"]`.
 - `options.streams`: _(Optional)_ Array of `process` streams to track. Defaults to `[]` (no streams monitored).
 
