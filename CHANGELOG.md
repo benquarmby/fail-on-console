@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/benquarmby/fail-on-console/compare/v1.3.1...v1.4.0) (2026-08-08)
+
+
+### Features
+
+* support custom format functions ([25908c3](https://github.com/benquarmby/fail-on-console/commit/25908c3e9219eb607a944d269188db0113376ddd))
+
 ## [1.3.1](https://github.com/benquarmby/fail-on-console/compare/v1.3.0...v1.3.1) (2026-08-01)
 
 
