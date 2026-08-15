@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/benquarmby/fail-on-console/compare/v1.4.0...v1.4.1) (2026-08-15)
+
+
+### Bug Fixes
+
+* add defense for missing hooks ([6e5323b](https://github.com/benquarmby/fail-on-console/commit/6e5323b433dce8cfa5ad9e9ffd911c648d8721c6))
+
 ## [1.4.0](https://github.com/benquarmby/fail-on-console/compare/v1.3.1...v1.4.0) (2026-08-08)
 
 
