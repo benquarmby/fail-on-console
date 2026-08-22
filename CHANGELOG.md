@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/benquarmby/fail-on-console/compare/v1.4.1...v1.4.2) (2026-08-22)
+
+
+### Bug Fixes
+
+* properly document custom format option ([5456c53](https://github.com/benquarmby/fail-on-console/commit/5456c533f423beded7a4d1e9046beb29c26e420b))
+
 ## [1.4.1](https://github.com/benquarmby/fail-on-console/compare/v1.4.0...v1.4.1) (2026-08-15)
 
 
