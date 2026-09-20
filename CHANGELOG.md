@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/benquarmby/fail-on-console/compare/v1.4.2...v1.4.3) (2026-09-20)
+
+
+### Bug Fixes
+
+* add defense for incorrect format argument ([717ee97](https://github.com/benquarmby/fail-on-console/commit/717ee97e815157a411b695e8c16a772f96eb1eec))
+
 ## [1.4.2](https://github.com/benquarmby/fail-on-console/compare/v1.4.1...v1.4.2) (2026-08-22)
 
 
