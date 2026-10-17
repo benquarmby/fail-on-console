@@ -1,4 +1,4 @@
-const {allowStream, setupConsole} = require("..");
+const {allowStream} = require("..");
 
 describe("process stream monitoring", function () {
     allowStream("stdout", ["expected write from a third-party library"]);

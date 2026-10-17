@@ -4,6 +4,7 @@ const baseConfig = {
     environment: "node",
     globals: true
 };
+const assertSuite = "./__tests__/assert.test.js";
 const formattingSuite = "./__tests__/formatting.test.js";
 const validationSuite = "./__tests__/validation.test.js";
 
@@ -19,9 +20,16 @@ export default defineConfig({
                 test: {
                     ...baseConfig,
                     include: ["./__tests__/*.test.js"],
-                    exclude: [formattingSuite, validationSuite],
+                    exclude: [assertSuite, formattingSuite, validationSuite],
                     setupFiles: ["./test.setup.js"],
                     name: "core"
+                }
+            },
+            {
+                test: {
+                    ...baseConfig,
+                    include: [assertSuite],
+                    name: "assert"
                 }
             },
             {

@@ -1,4 +1,4 @@
-const {allowConsole, setupConsole} = require("..");
+const {setupConsole} = require("..");
 
 describe("fail-on-console", function () {
     it("should disallow calling setup twice", function () {

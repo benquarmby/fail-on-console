@@ -1,4 +1,4 @@
-const {allowConsole, setupConsole} = require("..");
+const {allowConsole} = require("..");
 
 describe("console method monitoring", function () {
     allowConsole("warn", ["expected warning from a third-party library"]);
@@ -29,15 +29,9 @@ describe("console method monitoring", function () {
         console.warn("completely unexpected warning");
     });
 
-    it("should fail when trying to allow calls to the assert method", function () {
-        expect(() => allowConsole("assert", "nope")).toThrow(
-            'fail-on-console: One or more unsupported console methods provided: "assert". Supported console methods are: "error", "warn", "info", "log", "debug".'
-        );
-    });
-
     it("should fail when trying to allow calls to an unknown method", function () {
         expect(() => allowConsole("warning", "unknown")).toThrow(
-            'fail-on-console: One or more unsupported console methods provided: "warning". Supported console methods are: "error", "warn", "info", "log", "debug".'
+            'fail-on-console: One or more unsupported console methods provided: "warning". Supported console methods are: "error", "warn", "info", "log", "debug", "assert".'
         );
     });
 
@@ -97,22 +91,6 @@ describe("console method monitoring", function () {
 
         it.fails?.("should fail because the previous inline rule doesn't leak downward", function () {
             console.warn("inline warn message");
-        });
-    });
-
-    /**
-     * This suite simply proves why concurrency can't work. Test state is
-     * mutated at module scope, much like fail-on-console handles allow rules.
-     */
-    describe("concurrent gap", function () {
-        it.concurrent?.("should report the wrong test name given a slow timeout", async function () {
-            await new Promise((resolve) => setTimeout(resolve, 50));
-            expect(expect.getState().currentTestName).toMatch(/fast timeout$/);
-        });
-
-        it.concurrent?.("should report the correct test name given a fast timeout", async function () {
-            await new Promise((resolve) => setTimeout(resolve, 10));
-            expect(expect.getState().currentTestName).toMatch(/fast timeout$/);
         });
     });
 });

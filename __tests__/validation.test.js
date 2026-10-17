@@ -18,11 +18,11 @@ describe("fail-on-console setup validation", function () {
         );
     });
 
-    it("should explicitly dissallow the assert method", function () {
-        const methods = ["assert", "info", "debug"];
+    it("should explicitly dissallow the trace method", function () {
+        const methods = ["trace", "info", "debug"];
 
         expect(() => setupConsole({...testApi, methods})).toThrow(
-            'fail-on-console: One or more unsupported console methods provided: "assert". Supported console methods are: "error", "warn", "info", "log", "debug".'
+            'fail-on-console: One or more unsupported console methods provided: "trace". Supported console methods are: "error", "warn", "info", "log", "debug", "assert".'
         );
     });
 
@@ -30,7 +30,7 @@ describe("fail-on-console setup validation", function () {
         const methods = ["nope", "info", "yep", "error"];
 
         expect(() => setupConsole({...testApi, methods})).toThrow(
-            'fail-on-console: One or more unsupported console methods provided: "nope", "yep". Supported console methods are: "error", "warn", "info", "log", "debug".'
+            'fail-on-console: One or more unsupported console methods provided: "nope", "yep". Supported console methods are: "error", "warn", "info", "log", "debug", "assert".'
         );
     });
 

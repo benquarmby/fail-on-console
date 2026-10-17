@@ -1,8 +1,8 @@
-const supportedMethods = ["error", "warn", "info", "log", "debug"];
+const supportedMethods = ["error", "warn", "info", "log", "debug", "assert"];
 const supportedStreams = ["stderr", "stdout"];
-// Everything but console.debug is monitored by default. Debug logging in tests
-// is usually intentional.
-const defaultMethods = supportedMethods.slice(0, -1);
+// Everything but console.debug and console.assert is monitored by default.
+// Debug and assert logging in tests is usually intentional.
+const defaultMethods = supportedMethods.slice(0, 4);
 // No streams are monitored by default.
 const defaultStreams = [];
 // %s string, %d/%i integer, %o object, %f float
@@ -146,7 +146,21 @@ function setupConsole({
             calls.length = 0;
 
             console[method] = function consoleOverride(...args) {
-                const message = format(...args);
+                let message;
+
+                if (method === "assert") {
+                    const [condition, ...data] = args;
+
+                    if (condition) {
+                        // Passing assertion, nothing would be logged.
+                        return;
+                    }
+
+                    message = data.length ? `Assertion failed: ${format(...data)}` : "Assertion failed";
+                } else {
+                    message = format(...args);
+                }
+
                 const rules = allowedMethods.get(method);
 
                 if (rules?.some((rule) => isAllowed(message, rule))) {

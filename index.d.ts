@@ -1,4 +1,4 @@
-export type ConsoleMethod = "error" | "warn" | "info" | "log" | "debug";
+export type ConsoleMethod = "error" | "warn" | "info" | "log" | "debug" | "assert";
 export type ProcessStream = "stderr" | "stdout";
 
 export interface ExpectStateLike {
@@ -53,8 +53,8 @@ export function setup(options: SetupOptions): void;
  * @param {Function} options.beforeEach The beforeEach hook from the test framework.
  * @param {Function} options.afterEach The afterEach hook from the test framework.
  * @param {Function} [options.format] Optional function to format console messages. Uses a basic shim by default.
- * @param {string[]} [options.methods=["error","warn","info","log"]] Console methods to monitor.
- * @param {string[]} [options.streams=[]] Process streams to monitor. None by default.
+ * @param {string[]} [options.methods] Console methods to monitor.
+ * @param {string[]} [options.streams] Process streams to monitor. None by default.
  * @example
  * // Vitest
  * import {beforeEach, afterEach} from "vitest";
@@ -74,7 +74,7 @@ export function setupConsole(options: SetupOptions): void;
  * Allows specific console calls to pass. Console exceptions can be configured
  * globally, within a describe block or inside a single test.
  * @param {string} method The console method to allow: "error", "warn", "info",
- * "log" or "debug".
+ * "log", "debug" or "assert".
  * @param {string|RegExp|Function|Array<string|RegExp|Function>} rules One or
  * more rules. A message is allowed if any rule finds a match. A string matches
  * when the message contains it. A RegExp matches when it tests true against

@@ -70,6 +70,27 @@ setupConsole({
 });
 ```
 
+### Monitoring `console.assert`
+
+`console.assert` is not monitored by default. Add `"assert"` to `methods` to opt in:
+
+```js
+setupConsole({
+    beforeEach,
+    afterEach,
+    methods: ["error", "warn", "info", "log", "assert"]
+});
+```
+
+Only failed assertions count. `console.assert(condition, ...data)` prints nothing when the condition is truthy, so those calls are ignored. When the condition is falsy, the test fails with the message the console would have printed: `Assertion failed`, followed by `: ` and the formatted data when there is any. Allow rules receive that full message:
+
+```js
+allowConsole("assert", /^Assertion failed: expected \d+ items$/);
+```
+
+> [!NOTE]
+> Node's console reports failed assertions using `console.warn`. Without this opt-in, a failed assertion can still be caught by the `warn` monitor in runners that use it, with a less helpful message.
+
 ### Using a Custom Formatter
 
 By default, a lightweight and browser compatible equivalent of the Node.js [`util.format()`](https://nodejs.org/api/util.html#utilformatformat-args) function is used for `printf`-like formatting of console messages. It covers the most common use cases but has limitations. If a more accurate and complete implementation is required, pass it as the `format` option:
@@ -115,14 +136,14 @@ Initializes console spies that monitor active tests.
 - `options.beforeEach`: The framework's `beforeEach` hook.
 - `options.afterEach`: The framework's `afterEach` hook.
 - `options.format`: _(Optional)_ A custom `printf`-like console message formatter. Defaults to a basic implementation.
-- `options.methods`: _(Optional)_ Array of `console` methods to track. Defaults to `["error", "warn", "info", "log"]`.
+- `options.methods`: _(Optional)_ Array of `console` methods to track. Defaults to `["error", "warn", "info", "log"]`. `"debug"` and `"assert"` are also supported.
 - `options.streams`: _(Optional)_ Array of `process` streams to track. Defaults to `[]` (no streams monitored).
 
 ### `allowConsole(method, rules)`
 
 Registers a temporary or global allowlist rule for a monitored console method.
 
-- `method`: `"error" | "warn" | "info" | "log" | "debug"`
+- `method`: `"error" | "warn" | "info" | "log" | "debug" | "assert"`
 - `rules`: A single rule or an array of rules. A rule can be:
     - `string`: Allowed if the console message contains this substring.
     - `RegExp`: Allowed if the regex tests true against the message.
@@ -143,10 +164,6 @@ Registers a temporary or global allowlist rule for a monitored process stream.
 ### Concurrency
 
 `fail-on-console` is not compatible with concurrent asynchronous tests (e.g., `test.concurrent`). Because concurrent tests execute simultaneously within the same environment context, console logs cannot be isolated reliably per individual test. For suites requiring specific log suppression, tests must be run sequentially.
-
-### Assert
-
-Monitoring `console.assert` is currently unsupported. It has a distinct signature and unique assertion mechanics compared to standard logging methods.
 
 ### Mocha
 
