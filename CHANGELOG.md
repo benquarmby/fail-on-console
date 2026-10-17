@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/benquarmby/fail-on-console/compare/v1.4.3...v1.5.0) (2026-10-17)
+
+
+### Features
+
+* support console.assert ([ae4daeb](https://github.com/benquarmby/fail-on-console/commit/ae4daeba2510fb6b0364282807a30e0b4e07a1b3))
+
 ## [1.4.3](https://github.com/benquarmby/fail-on-console/compare/v1.4.2...v1.4.3) (2026-09-20)
 
 
