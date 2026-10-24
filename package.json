@@ -32,7 +32,7 @@
         "@vitest/coverage-v8": "^5.0.5",
         "commitlint": "^21.2.3",
         "jest": "^30.5.2",
-        "npm-run-all2": "^9.0.3",
+        "npm-run-all2": "^9.0.4",
         "prettier": "^3.9.10",
         "prettier-plugin-packagejson": "^3.0.2",
         "typescript": "^7.0.2",
