@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1-alpha](https://github.com/benquarmby/fail-on-console/compare/v1.5.0...v1.5.1-alpha) (2026-11-22)
+
+
+### Bug Fixes
+
+* bump version ([f8e1774](https://github.com/benquarmby/fail-on-console/commit/f8e17741ae24e6550a83b62314ca79834922bb4e))
+
 ## [1.5.0](https://github.com/benquarmby/fail-on-console/compare/v1.4.3...v1.5.0) (2026-10-17)
 
 
@@ -96,4 +103,3 @@
 ### Features
 
 * add initial fail-on-console implementation ([a414cbf](https://github.com/benquarmby/fail-on-console/commit/a414cbfb129443a2fd1d369d4f37c6b54fe90aa5))
-
