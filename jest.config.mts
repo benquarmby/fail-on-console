@@ -1,8 +1,10 @@
+import {defineConfig} from "jest";
+
 const assertSuite = "<rootDir>/__tests__/assert.test.js";
 const formattingSuite = "<rootDir>/__tests__/formatting.test.js";
 const validationSuite = "<rootDir>/__tests__/validation.test.js";
 
-export default {
+export default defineConfig({
     testEnvironment: "node",
     projects: [
         {
@@ -24,4 +26,4 @@ export default {
             testMatch: [validationSuite]
         }
     ]
-};
+});

@@ -8,5 +8,5 @@
         "strict": true,
         "target": "es2022"
     },
-    "include": ["index.js", "index.d.ts"]
+    "include": ["index.js", "index.d.ts", "*.config.mts"]
 }
