@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1-alpha.1](https://github.com/benquarmby/fail-on-console/compare/v1.5.1-alpha...v1.5.1-alpha.1) (2026-11-22)
+
+
+### Bug Fixes
+
+* limit public exports ([ab9b0e3](https://github.com/benquarmby/fail-on-console/commit/ab9b0e3f450f157c2225d729385367a70e458e4e))
+
 ## [1.5.1-alpha](https://github.com/benquarmby/fail-on-console/compare/v1.5.0...v1.5.1-alpha) (2026-11-22)
 
 

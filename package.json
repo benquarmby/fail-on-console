@@ -1,6 +1,6 @@
 {
     "name": "fail-on-console",
-    "version": "1.5.1-alpha",
+    "version": "1.5.1-alpha.1",
     "description": "Fail Vitest or Jest tests when unexpected console logs, warnings or errors occur.",
     "keywords": [
         "jest",
