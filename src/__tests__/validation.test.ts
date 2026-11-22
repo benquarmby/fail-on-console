@@ -1,4 +1,4 @@
-import {setupConsole, allowConsole, allowStream} from "../..";
+import {setupConsole, allowConsole, allowStream} from "..";
 
 const testApi = {beforeEach, afterEach};
 

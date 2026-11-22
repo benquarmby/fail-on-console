@@ -1,25 +1,72 @@
-const supportedMethods = ["error", "warn", "info", "log", "debug", "assert"];
-const supportedStreams = ["stderr", "stdout"];
+export type ConsoleMethod = "error" | "warn" | "info" | "log" | "debug" | "assert";
+export type ProcessStream = "stderr" | "stdout";
+
+export interface ExpectStateLike {
+    currentTestName?: string;
+}
+
+export interface ExpectLike {
+    getState(): ExpectStateLike;
+}
+
+export interface LifecycleHookLike {
+    (fn: () => void): void;
+}
+
+export interface FormatLike {
+    (format?: any, ...args: any[]): string;
+}
+
+export interface TestApi {
+    beforeEach: LifecycleHookLike;
+    afterEach: LifecycleHookLike;
+    /**
+     * @deprecated No longer needed. This option can be omitted.
+     */
+    expect?: ExpectLike;
+}
+
+export interface SetupOptions extends TestApi {
+    methods?: ConsoleMethod[];
+    streams?: ProcessStream[];
+    format?: FormatLike;
+}
+
+export interface AllowPredicate {
+    (message: string): boolean;
+}
+
+export type AllowRule = string | RegExp | AllowPredicate;
+
+interface ConsoleCall {
+    message: string;
+    stack: string;
+}
+
+type WriteCallback = (err?: Error | null) => void;
+
+const supportedMethods: ConsoleMethod[] = ["error", "warn", "info", "log", "debug", "assert"];
+const supportedStreams: ProcessStream[] = ["stderr", "stdout"];
 // Everything but console.debug and console.assert is monitored by default.
 // Debug and assert logging in tests is usually intentional.
-const defaultMethods = supportedMethods.slice(0, 4);
+const defaultMethods: ConsoleMethod[] = supportedMethods.slice(0, 4);
 // No streams are monitored by default.
-const defaultStreams = [];
+const defaultStreams: ProcessStream[] = [];
 // %s string, %d/%i integer, %o object, %f float
 const printfPattern = /%[sdiof]/g;
 
 // Module scoped variables to manage test state. Not safe for concurrent tests.
 // Test frameworks run tests serially by default.
-let testApi;
+let testApi: TestApi | undefined;
 let isInsideTest = false;
-const allowedMethods = new Map();
-const allowedStreams = new Map();
+const allowedMethods = new Map<ConsoleMethod, AllowRule[]>();
+const allowedStreams = new Map<ProcessStream, AllowRule[]>();
 
-function quoteString(value) {
+function quoteString(value: string): string {
     return `"${value}"`;
 }
 
-function assertSupportedValues(pluralName, supportedValues, values) {
+function assertSupportedValues(pluralName: string, supportedValues: readonly string[], values: unknown): void {
     if (!Array.isArray(values)) {
         throw new Error(`fail-on-console: Expected an array of ${pluralName}.`);
     }
@@ -38,11 +85,11 @@ function assertSupportedValues(pluralName, supportedValues, values) {
     );
 }
 
-function assertSupportedMethods(methods) {
+function assertSupportedMethods(methods: unknown): void {
     return assertSupportedValues("console methods", supportedMethods, methods);
 }
 
-function assertSupportedStreams(streams) {
+function assertSupportedStreams(streams: unknown): void {
     return assertSupportedValues("process streams", supportedStreams, streams);
 }
 
@@ -53,7 +100,7 @@ function assertSupportedStreams(streams) {
  * @param {...*} args The list of arguments passed to the console method.
  * @returns {string} The formatted message string.
  */
-function defaultFormat(...args) {
+function defaultFormat(...args: any[]): string {
     const [format, ...values] = args;
 
     if (typeof format !== "string") {
@@ -76,7 +123,7 @@ function defaultFormat(...args) {
     return result;
 }
 
-function isAllowed(message, rule) {
+function isAllowed(message: string, rule: AllowRule): boolean {
     if (typeof rule === "string") {
         return message.includes(rule);
     }
@@ -88,7 +135,7 @@ function isAllowed(message, rule) {
     return rule.test(message);
 }
 
-function chunkToString(chunk, encoding = "utf8") {
+function chunkToString(chunk: unknown, encoding: BufferEncoding = "utf8"): string {
     if (typeof chunk === "string") {
         return chunk;
     }
@@ -98,19 +145,25 @@ function chunkToString(chunk, encoding = "utf8") {
             return chunk.toString(encoding);
         }
 
-        return new TextDecoder(encoding).decode(chunk);
+        const intArray = new Uint8Array(chunk.buffer, chunk.byteOffset, chunk.byteLength);
+
+        return new TextDecoder(encoding).decode(intArray);
     }
 
-    return Buffer.from(chunk).toString(encoding);
+    // Deliberately pass unknown values to Buffer.from so invalid inputs throw
+    // ERR_INVALID_ARG_TYPE. This is the same behavior as WriteStream#write().
+    const anyChunk: any = chunk;
+
+    return Buffer.from(anyChunk).toString(encoding);
 }
 
-function setupConsole({
+export function setupConsole({
     beforeEach,
     afterEach,
     format = defaultFormat,
     methods = defaultMethods,
     streams = defaultStreams
-}) {
+}: SetupOptions): void {
     if (testApi) {
         throw new Error("fail-on-console: Call setupConsole() only once.");
     }
@@ -140,13 +193,13 @@ function setupConsole({
 
     methods.forEach(function (method) {
         const original = console[method];
-        const calls = [];
+        const calls: ConsoleCall[] = [];
 
         beforeEach(function () {
             calls.length = 0;
 
-            console[method] = function consoleOverride(...args) {
-                let message;
+            console[method] = function consoleOverride(...args: any[]) {
+                let message: string;
 
                 if (method === "assert") {
                     const [condition, ...data] = args;
@@ -197,12 +250,18 @@ function setupConsole({
         }
 
         const originalWrite = stream.write;
-        const calls = [];
+        const calls: ConsoleCall[] = [];
 
         beforeEach(function () {
             calls.length = 0;
 
-            stream.write = function streamOverride(chunk, encoding, cb) {
+            function streamOverride(chunk: Uint8Array | string, cb?: WriteCallback): boolean;
+            function streamOverride(chunk: Uint8Array | string, encoding?: BufferEncoding, cb?: WriteCallback): boolean;
+            function streamOverride(
+                chunk: Uint8Array | string,
+                encoding?: BufferEncoding | WriteCallback,
+                cb?: WriteCallback
+            ): boolean {
                 if (typeof encoding === "function") {
                     cb = encoding;
                     encoding = undefined;
@@ -221,7 +280,9 @@ function setupConsole({
                 cb?.();
 
                 return true;
-            };
+            }
+
+            stream.write = streamOverride;
         });
 
         afterEach(function () {
@@ -240,7 +301,13 @@ function setupConsole({
     });
 }
 
-function allowConsole(method, rules) {
+/**
+ * @deprecated Use setupConsole() instead. This function will be removed in a
+ * future major version.
+ */
+export const setup: typeof setupConsole = setupConsole;
+
+export function allowConsole(method: ConsoleMethod, rules: AllowRule | AllowRule[]): void {
     if (!testApi) {
         throw new Error("fail-on-console: Call setupConsole() before using allowConsole().");
     }
@@ -249,7 +316,7 @@ function allowConsole(method, rules) {
 
     const normalized = Array.isArray(rules) ? rules : [rules];
 
-    function addRules() {
+    function addRules(): void {
         const existing = allowedMethods.get(method) ?? [];
         allowedMethods.set(method, [...existing, ...normalized]);
     }
@@ -261,7 +328,7 @@ function allowConsole(method, rules) {
     }
 }
 
-function allowStream(stream, rules) {
+export function allowStream(stream: ProcessStream, rules: AllowRule | AllowRule[]): void {
     if (!testApi) {
         throw new Error("fail-on-console: Call setupConsole() before using allowStream().");
     }
@@ -270,7 +337,7 @@ function allowStream(stream, rules) {
 
     const normalized = Array.isArray(rules) ? rules : [rules];
 
-    function addRules() {
+    function addRules(): void {
         const existing = allowedStreams.get(stream) ?? [];
         allowedStreams.set(stream, [...existing, ...normalized]);
     }
@@ -281,8 +348,3 @@ function allowStream(stream, rules) {
         testApi.beforeEach(addRules);
     }
 }
-
-exports.setup = setupConsole;
-exports.setupConsole = setupConsole;
-exports.allowConsole = allowConsole;
-exports.allowStream = allowStream;

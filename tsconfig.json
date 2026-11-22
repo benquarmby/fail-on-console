@@ -1,13 +1,13 @@
 {
     "compilerOptions": {
-        "allowJs": true,
-        "checkJs": true,
+        "forceConsistentCasingInFileNames": true,
         "lib": ["es2022"],
         "module": "nodenext",
-        "noEmit": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
         "strict": true,
         "target": "es2022",
         "types": ["vitest/globals", "node"]
     },
-    "include": ["index.js", "index.d.ts", "*.config.mts", "./src/"]
+    "include": ["*.config.mts", "./src/"]
 }

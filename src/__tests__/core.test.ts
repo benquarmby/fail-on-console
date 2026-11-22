@@ -1,4 +1,4 @@
-import {setupConsole} from "../..";
+import {setupConsole} from "..";
 
 describe("fail-on-console", function () {
     it("should disallow calling setup twice", function () {

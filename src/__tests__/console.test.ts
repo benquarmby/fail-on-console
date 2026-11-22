@@ -1,4 +1,4 @@
-import {allowConsole} from "../..";
+import {allowConsole} from "..";
 
 describe("console method monitoring", function () {
     allowConsole("warn", ["expected warning from a third-party library"]);

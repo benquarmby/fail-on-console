@@ -1,4 +1,4 @@
-import {type ConsoleMethod, allowConsole, setupConsole} from "../..";
+import {type ConsoleMethod, allowConsole, setupConsole} from "..";
 
 setupConsole({afterEach, beforeEach});
 

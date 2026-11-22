@@ -13,25 +13,29 @@
         "url": "https://github.com/benquarmby/fail-on-console"
     },
     "license": "MIT",
-    "main": "./index.js",
+    "main": "./lib/index.js",
     "files": [
         "./CHANGELOG.md",
-        "./index.d.ts"
+        "./lib/"
     ],
     "scripts": {
+        "prebuild": "tsc --noEmit",
+        "build": "tsc --project tsconfig.build.json",
+        "clean": "del-cli ./lib",
         "commit:check": "commitlint --from-last-tag",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
+        "test": "run-s test:vitest test:jest",
         "test:jest": "jest",
         "test:vitest": "vitest run --coverage",
-        "type:check": "tsc",
-        "verify": "run-s commit:check format:check type:check test:vitest test:jest"
+        "verify": "run-s commit:check format:check clean build test:vitest test:jest"
     },
     "devDependencies": {
         "@commitlint/config-conventional": "^21.2.4",
         "@types/node": "~24.19.2",
         "@vitest/coverage-v8": "^5.1.1",
         "commitlint": "^21.2.4",
+        "del-cli": "^8.0.1",
         "jest": "^30.5.2",
         "npm-run-all2": "^9.1.0",
         "prettier": "^3.10.1",

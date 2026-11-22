@@ -1,4 +1,4 @@
-import {allowConsole, allowStream, setupConsole} from "../..";
+import {allowConsole, allowStream, setupConsole} from "..";
 import {format} from "util";
 
 setupConsole({

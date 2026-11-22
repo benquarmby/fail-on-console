@@ -1,4 +1,4 @@
-import {allowConsole, setupConsole} from "../..";
+import {allowConsole, setupConsole} from "..";
 
 setupConsole({
     afterEach,
