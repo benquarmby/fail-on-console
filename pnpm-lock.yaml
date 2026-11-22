@@ -193,6 +193,9 @@ importers:
       prettier:
         specifier: ^3.10.1
         version: 3.10.1
+      prettier-plugin-organize-imports:
+        specifier: ^4.3.0
+        version: 4.3.0(prettier@3.10.1)(typescript@6.0.3)
       prettier-plugin-packagejson:
         specifier: ^3.1.0
         version: 3.1.0(prettier@3.10.1)
@@ -2102,6 +2105,16 @@ packages:
   presentable-error@0.0.1:
     resolution: {integrity: sha512-E6rsNU1QNJgB3sjj7OANinGncFKuK+164sLXw1/CqBjj/EkXSoSdHCtWQGBNlREIGLnL7IEUEGa08YFVUbrhVg==}
     engines: {node: '>=16'}
+
+  prettier-plugin-organize-imports@4.3.0:
+    resolution: {integrity: sha512-FxFz0qFhyBsGdIsb697f/EkvHzi5SZOhWAjxcx2dLt+Q532bAlhswcXGYB1yzjZ69kW8UoadFBw7TyNwlq96Iw==}
+    peerDependencies:
+      prettier: '>=2.0'
+      typescript: '>=2.9'
+      vue-tsc: ^2.1.0 || 3
+    peerDependenciesMeta:
+      vue-tsc:
+        optional: true
 
   prettier-plugin-packagejson@3.1.0:
     resolution: {integrity: sha512-KxH8E68UGYVW4IDxZk7lLXKxVd8uY6g8ctfu+fNwA+bAKgCN66ZoRIcPtOHXDa1kDj/nLBZIgH8srP/1Yaz9iA==}
@@ -4434,6 +4447,11 @@ snapshots:
       source-map-js: 1.2.2
 
   presentable-error@0.0.1: {}
+
+  prettier-plugin-organize-imports@4.3.0(prettier@3.10.1)(typescript@6.0.3):
+    dependencies:
+      prettier: 3.10.1
+      typescript: 6.0.3
 
   prettier-plugin-packagejson@3.1.0(prettier@3.10.1):
     dependencies:

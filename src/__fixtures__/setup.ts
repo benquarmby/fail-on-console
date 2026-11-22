@@ -1,5 +1,5 @@
-import {allowConsole, allowStream, setupConsole} from "..";
 import {format} from "util";
+import {allowConsole, allowStream, setupConsole} from "..";
 
 setupConsole({
     afterEach,
