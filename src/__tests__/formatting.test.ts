@@ -1,8 +1,8 @@
-const {allowConsole, setupConsole} = require("..");
+import {type ConsoleMethod, allowConsole, setupConsole} from "../..";
 
 setupConsole({afterEach, beforeEach});
 
-function expectFormattedMessage(level, expected) {
+function expectFormattedMessage(level: ConsoleMethod, expected: string) {
     allowConsole(level, function (actual) {
         expect(actual).toBe(expected);
         return true;

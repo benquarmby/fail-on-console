@@ -1,4 +1,4 @@
-const {allowStream} = require("..");
+import {allowStream} from "../..";
 
 describe("process stream monitoring", function () {
     allowStream("stdout", ["expected write from a third-party library"]);
@@ -25,12 +25,14 @@ describe("process stream monitoring", function () {
     });
 
     it("should fail when trying to allow writes to an unsupported stream", function () {
+        // @ts-expect-error - testing invalid stream name
         expect(() => allowStream("stdin", "nope")).toThrow(
             'fail-on-console: One or more unsupported process streams provided: "stdin". Supported process streams are: "stderr", "stdout".'
         );
     });
 
     it("should fail when trying to allow writes to an unknown stream", function () {
+        // @ts-expect-error - testing invalid stream name
         expect(() => allowStream("output", "unknown")).toThrow(
             'fail-on-console: One or more unsupported process streams provided: "output". Supported process streams are: "stderr", "stdout".'
         );
@@ -87,7 +89,7 @@ describe("process stream monitoring", function () {
 
     describe("buffer and encoding handling", function () {
         it("should decode a Buffer using the provided encoding", function () {
-            let captured;
+            let captured: string | undefined;
             allowStream("stdout", (message) => {
                 captured = message;
                 return true;
@@ -99,7 +101,7 @@ describe("process stream monitoring", function () {
         });
 
         it("should decode a Buffer as utf8 when no encoding is provided", function () {
-            let captured;
+            let captured: string | undefined;
             allowStream("stdout", (message) => {
                 captured = message;
                 return true;
@@ -111,7 +113,7 @@ describe("process stream monitoring", function () {
         });
 
         it("should decode a non-Buffer typed array view using TextDecoder", function () {
-            let captured;
+            let captured: string | undefined;
             allowStream("stdout", (message) => {
                 captured = message;
                 return true;
@@ -124,6 +126,7 @@ describe("process stream monitoring", function () {
         });
 
         it("should throw like Node's real write() when given a chunk that isn't a string or buffer", function () {
+            // @ts-expect-error - testing invalid chunk type
             expect(() => process.stdout.write(12345)).toThrow(
                 expect.objectContaining({
                     name: "TypeError",
@@ -145,7 +148,7 @@ describe("process stream monitoring", function () {
         });
 
         it("should treat a function second argument as the callback rather than the encoding", function () {
-            let captured;
+            let captured: string | undefined;
             let callCount = 0;
             allowStream("stdout", (message) => {
                 captured = message;
@@ -161,7 +164,7 @@ describe("process stream monitoring", function () {
         });
 
         it("should support the (chunk, encoding, callback) signature without shifting the encoding", function () {
-            let captured;
+            let captured: string | undefined;
             let callCount = 0;
             allowStream("stdout", (message) => {
                 captured = message;

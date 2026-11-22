@@ -1,29 +1,43 @@
 import {defineConfig} from "jest";
+import {createDefaultPreset} from "ts-jest";
 
-const assertSuite = "<rootDir>/__tests__/assert.test.js";
-const formattingSuite = "<rootDir>/__tests__/formatting.test.js";
-const validationSuite = "<rootDir>/__tests__/validation.test.js";
+const assertSuite = "<rootDir>/src/__tests__/assert.test.ts";
+const formattingSuite = "<rootDir>/src/__tests__/formatting.test.ts";
+const validationSuite = "<rootDir>/src/__tests__/validation.test.ts";
+
+const project = {
+    testEnvironment: "node",
+    ...createDefaultPreset({
+        diagnostics: false,
+        tsconfig: {
+            isolatedModules: true
+        }
+    })
+};
 
 export default defineConfig({
-    testEnvironment: "node",
     projects: [
         {
             displayName: "core",
-            setupFilesAfterEnv: ["<rootDir>/test.setup.js"],
-            testMatch: ["<rootDir>/__tests__/*.test.js"],
-            testPathIgnorePatterns: [assertSuite, formattingSuite, validationSuite]
+            setupFilesAfterEnv: ["<rootDir>/src/__fixtures__/setup.ts"],
+            testMatch: ["<rootDir>/src/__tests__/*.test.ts"],
+            testPathIgnorePatterns: [assertSuite, formattingSuite, validationSuite],
+            ...project
         },
         {
             displayName: "assert",
-            testMatch: [assertSuite]
+            testMatch: [assertSuite],
+            ...project
         },
         {
             displayName: "formatting",
-            testMatch: [formattingSuite]
+            testMatch: [formattingSuite],
+            ...project
         },
         {
             displayName: "validation",
-            testMatch: [validationSuite]
+            testMatch: [validationSuite],
+            ...project
         }
     ]
 });

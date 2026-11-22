@@ -1,4 +1,4 @@
-const {allowConsole} = require("..");
+import {allowConsole} from "../..";
 
 describe("console method monitoring", function () {
     allowConsole("warn", ["expected warning from a third-party library"]);
@@ -30,6 +30,7 @@ describe("console method monitoring", function () {
     });
 
     it("should fail when trying to allow calls to an unknown method", function () {
+        // @ts-expect-error - testing invalid method name
         expect(() => allowConsole("warning", "unknown")).toThrow(
             'fail-on-console: One or more unsupported console methods provided: "warning". Supported console methods are: "error", "warn", "info", "log", "debug", "assert".'
         );

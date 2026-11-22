@@ -1,5 +1,5 @@
-const {allowConsole, allowStream, setupConsole} = require(".");
-const {format} = require("util");
+import {allowConsole, allowStream, setupConsole} from "../..";
+import {format} from "util";
 
 setupConsole({
     afterEach,

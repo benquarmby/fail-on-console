@@ -1,4 +1,4 @@
-const {allowConsole, setupConsole} = require("..");
+import {allowConsole, setupConsole} from "../..";
 
 setupConsole({
     afterEach,
@@ -48,11 +48,12 @@ describe("console.assert monitoring", function () {
 
     it.fails?.("should fail the test when called without arguments", function () {
         allowWarnRoute();
+        // @ts-expect-error - testing call without arguments
         console.assert();
     });
 
     it("should match allow rules against the printed message, without the condition", function () {
-        let captured;
+        let captured: string | undefined;
         allowConsole("assert", (message) => {
             captured = message;
             return true;
@@ -64,7 +65,7 @@ describe("console.assert monitoring", function () {
     });
 
     it("should print only the prefix when there is no message", function () {
-        let captured;
+        let captured: string | undefined;
         allowConsole("assert", (message) => {
             captured = message;
             return true;
