@@ -11,5 +11,5 @@ export default {
             }
         }
     ],
-    plugins: ["prettier-plugin-packagejson"]
+    plugins: ["prettier-plugin-packagejson", "prettier-plugin-organize-imports"]
 };
