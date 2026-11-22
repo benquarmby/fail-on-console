@@ -166,6 +166,9 @@ importers:
 
   .:
     devDependencies:
+      '@commitlint/cli':
+        specifier: ^21.2.4
+        version: 21.2.4(conventional-commits-parser@7.1.0)(typescript@6.0.3)
       '@commitlint/config-conventional':
         specifier: ^21.2.4
         version: 21.2.4
@@ -175,9 +178,6 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^5.1.1
         version: 5.1.1(vitest@5.1.1)
-      commitlint:
-        specifier: ^21.2.4
-        version: 21.2.4(conventional-commits-parser@7.1.0)(typescript@6.0.3)
       del-cli:
         specifier: ^8.0.1
         version: 8.0.1
@@ -1196,11 +1196,6 @@ packages:
 
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
-
-  commitlint@21.2.4:
-    resolution: {integrity: sha512-+zC+f2PKKecA7q3YiL1xBqxInqmJ4EVrdroOA7nDNDLvQnkrEh8fEx4TX3KKyq8ltLNrc+RBp6iFil/uxyFXOQ==}
-    engines: {node: '>=22.12.0'}
-    hasBin: true
 
   conventional-changelog-angular@9.2.1:
     resolution: {integrity: sha512-oWSL6ZhnXbYraOFTK3PgRAQJ8fADDAEv5K6AdeyQPLvjFmhG8+ejL0jZZp/R7vTmGJaBvZEE+sE7dB4bCv7sAw==}
@@ -3585,15 +3580,6 @@ snapshots:
       color-name: 1.1.4
 
   color-name@1.1.4: {}
-
-  commitlint@21.2.4(conventional-commits-parser@7.1.0)(typescript@6.0.3):
-    dependencies:
-      '@commitlint/cli': 21.2.4(conventional-commits-parser@7.1.0)(typescript@6.0.3)
-      '@commitlint/types': 21.2.3
-    transitivePeerDependencies:
-      - conventional-commits-filter
-      - conventional-commits-parser
-      - typescript
 
   conventional-changelog-angular@9.2.1:
     dependencies:
