@@ -54,6 +54,10 @@ export function setupConsole({
 
     currentTestApi.register({beforeEach, afterEach});
 
+    // A single afterEach restores every override before reporting. Runners
+    // like Vitest and node:test skip the remaining afterEach hooks once one throws.
+    const checks: (() => string | undefined)[] = [];
+
     beforeEach(function () {
         currentTestApi.enterTest();
         currentAllowList.reset();
@@ -61,6 +65,12 @@ export function setupConsole({
 
     afterEach(function () {
         currentTestApi.exitTest();
+
+        const failures = checks.map((check) => check()).filter((failure) => failure !== undefined);
+
+        if (failures.length) {
+            throw new Error(failures.join("\n\n"));
+        }
     });
 
     methods.forEach(function (method) {
@@ -97,7 +107,7 @@ export function setupConsole({
             };
         });
 
-        afterEach(function () {
+        checks.push(function () {
             console[method] = original;
 
             if (!calls.length) {
@@ -106,9 +116,7 @@ export function setupConsole({
 
             const detail = calls.map(({message, stack}) => `${message}\n${stack}`).join("\n\n");
 
-            throw new Error(
-                `Expected test not to call console.${method}().\n\n${detail}\n\nIf expected, use allowConsole("${method}", ...) to add an exception.`
-            );
+            return `Expected test not to call console.${method}().\n\n${detail}\n\nIf expected, use allowConsole("${method}", ...) to add an exception.`;
         });
     });
 
@@ -154,7 +162,7 @@ export function setupConsole({
             stream.write = streamOverride;
         });
 
-        afterEach(function () {
+        checks.push(function () {
             stream.write = originalWrite;
 
             if (!calls.length) {
@@ -163,9 +171,7 @@ export function setupConsole({
 
             const detail = calls.map(({message, stack}) => `${message}\n${stack}`).join("\n\n");
 
-            throw new Error(
-                `Expected test not to write to process.${streamName}.\n\n${detail}\n\nIf expected, use allowStream("${streamName}", ...) to add an exception.`
-            );
+            return `Expected test not to write to process.${streamName}.\n\n${detail}\n\nIf expected, use allowStream("${streamName}", ...) to add an exception.`;
         });
     });
 }

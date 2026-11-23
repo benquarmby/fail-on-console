@@ -95,3 +95,33 @@ describe("console method monitoring", function () {
         });
     });
 });
+
+// Jest has no it.fails, and rejects afterAll in a describe block without tests.
+if (it.fails) {
+    describe("restoring after a failing test", function () {
+        const originals = [
+            console.error,
+            console.warn,
+            console.info,
+            console.log,
+            process.stdout.write,
+            process.stderr.write
+        ];
+
+        afterAll(function () {
+            const current = [
+                console.error,
+                console.warn,
+                console.info,
+                console.log,
+                process.stdout.write,
+                process.stderr.write
+            ];
+            expect(current).toEqual(originals);
+        });
+
+        it.fails("should fail on an un-allowed console.warn", function () {
+            console.warn("unexpected warning between other monitored methods");
+        });
+    });
+}
