@@ -32,7 +32,8 @@
         "test": "run-s test:vitest test:jest",
         "test:jest": "jest",
         "test:vitest": "vitest run --coverage",
-        "verify": "run-s commit:check format:check clean build test:vitest test:jest"
+        "unused:check": "knip",
+        "verify": "run-s commit:check format:check unused:check clean build test:vitest test:jest"
     },
     "devDependencies": {
         "@commitlint/cli": "^21.2.4",
@@ -41,6 +42,7 @@
         "@vitest/coverage-v8": "^5.1.1",
         "del-cli": "^8.0.1",
         "jest": "^30.5.2",
+        "knip": "^6.47.0",
         "npm-run-all2": "^9.1.0",
         "prettier": "^3.10.1",
         "prettier-plugin-organize-imports": "^4.3.0",

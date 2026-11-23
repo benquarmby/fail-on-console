@@ -35,6 +35,8 @@ jobs:
         run: pnpm commit:check
       - name: Check Format
         run: pnpm format:check
+      - name: Check Unused Code
+        run: pnpm unused:check
       - name: Clean
         run: pnpm clean
       - name: Build
