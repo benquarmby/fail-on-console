@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/benquarmby/fail-on-console/compare/v1.5.1...v1.5.2) (2026-11-23)
+
+
+### Bug Fixes
+
+* check the hooks passed to setupConsole ([e03984a](https://github.com/benquarmby/fail-on-console/commit/e03984ab4bd0fd9d8c3be9aab9c8e076e36c34f0))
+
 ## [1.5.1](https://github.com/benquarmby/fail-on-console/compare/v1.5.0...v1.5.1) (2026-11-23)
 
 
