@@ -48,7 +48,6 @@ describe("console.assert monitoring", function () {
 
     it.fails?.("should fail the test when called without arguments", function () {
         allowWarnRoute();
-        // @ts-expect-error - testing call without arguments
         console.assert();
     });
 
