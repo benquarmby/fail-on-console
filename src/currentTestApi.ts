@@ -11,7 +11,7 @@ export const currentTestApi = {
             throw new Error("fail-on-console: Call setupConsole() only once.");
         }
 
-        if (typeof beforeEach !== "function" || typeof afterEach !== "function") {
+        if (typeof api.beforeEach !== "function" || typeof api.afterEach !== "function") {
             throw new Error("fail-on-console: beforeEach and afterEach hooks must be provided.");
         }
 
