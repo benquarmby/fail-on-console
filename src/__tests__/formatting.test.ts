@@ -3,6 +3,8 @@ import {type ConsoleMethod, allowConsole, setupConsole} from "..";
 setupConsole({afterEach, beforeEach});
 
 function expectFormattedMessage(level: ConsoleMethod, expected: string) {
+    expect.assertions(1);
+
     allowConsole(level, function (actual) {
         expect(actual).toBe(expected);
         return true;
