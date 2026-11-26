@@ -1,6 +1,15 @@
 import {allowStream} from "..";
 
+const stdoutDescriptors = Object.getOwnPropertyDescriptors(process.stdout);
+const stderrDescriptors = Object.getOwnPropertyDescriptors(process.stderr);
+
 describe("process stream monitoring", function () {
+    afterAll(function () {
+        // Should faithfully restore the original stream descriptors after all tests
+        expect(Object.getOwnPropertyDescriptors(process.stdout)).toEqual(stdoutDescriptors);
+        expect(Object.getOwnPropertyDescriptors(process.stderr)).toEqual(stderrDescriptors);
+    });
+
     allowStream("stdout", ["expected write from a third-party library"]);
 
     it("should pass when process.stdout.write is called with a globally allowed message", function () {

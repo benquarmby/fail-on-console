@@ -1,6 +1,13 @@
 import {allowConsole} from "..";
 
+const consoleDescriptors = Object.getOwnPropertyDescriptors(console);
+
 describe("console method monitoring", function () {
+    afterAll(function () {
+        // Should faithfully restore the original console descriptors after all tests
+        expect(Object.getOwnPropertyDescriptors(console)).toEqual(consoleDescriptors);
+    });
+
     allowConsole("warn", ["expected warning from a third-party library"]);
 
     it("should pass when console.warn is called with an allowed message", function () {
