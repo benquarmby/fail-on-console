@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.3-alpha](https://github.com/benquarmby/fail-on-console/compare/v1.5.2...v1.5.3-alpha) (2026-11-26)
+
+
+### Bug Fixes
+
+* faithfully restore the console and process streams after each test ([f6dfbfb](https://github.com/benquarmby/fail-on-console/commit/f6dfbfb87c2c78e6093ff0cd8d7e07d77fa8e718))
+
 ## [1.5.2](https://github.com/benquarmby/fail-on-console/compare/v1.5.1...v1.5.2) (2026-11-23)
 
 
