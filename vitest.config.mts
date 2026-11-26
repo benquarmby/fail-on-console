@@ -46,7 +46,6 @@ export default defineConfig({
                     name: "validation"
                 }
             }
-        ],
-        reporters: ["default", "github-actions"]
+        ]
     }
 });
